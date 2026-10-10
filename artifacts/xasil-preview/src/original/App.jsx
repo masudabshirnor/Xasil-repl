@@ -1377,9 +1377,9 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
   const maxOrdersCount = Math.max(...Object.values(propertyWeeklyCounts), 1);
 
   return (
-    <div className="min-h-screen w-full overflow-x-hidden bg-stone-50 text-neutral-800 font-sans relative flex flex-col justify-between">
+    <div className="xasil-page min-h-screen w-full overflow-x-hidden bg-stone-50 text-neutral-800 font-sans relative flex flex-col justify-between">
       <div>
-        <header className="sticky top-0 z-40 bg-white/96 backdrop-blur-xl border-b border-slate-200/80 shadow-[0_4px_24px_rgba(15,23,42,0.05)]">
+        <header className="xasil-main-header sticky top-0 z-40 bg-white/96 backdrop-blur-xl border-b border-slate-200/80 shadow-[0_4px_24px_rgba(15,23,42,0.05)]">
           <div className="max-w-7xl mx-auto px-4 lg:px-6 h-[72px] flex items-center justify-between gap-5">
             <button
               className="flex items-center shrink-0"
@@ -1401,7 +1401,11 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
                   setSelectedCity("All");
                   setSelectedDistrict("All");
                 }}
-                className="x-nav-link"
+                className={
+                  selectedCategory === "Stay"
+                    ? "x-nav-link is-active"
+                    : "x-nav-link"
+                }
               >
                 {lang === "SOM" ? "Hoy" : "Stays"}
               </button>
@@ -1412,7 +1416,11 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
                   setSelectedDistrict("All");
                   setSearchGuests(25);
                 }}
-                className="x-nav-link"
+                className={
+                  selectedCategory === "Hall"
+                    ? "x-nav-link is-active"
+                    : "x-nav-link"
+                }
               >
                 {lang === "SOM" ? "Hoolal & Xaflado" : "Halls & Events"}
               </button>
@@ -1422,7 +1430,7 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
                     .getElementById("popular-destinations")
                     ?.scrollIntoView({ behavior: "smooth" })
                 }
-                className="x-nav-link"
+                className="x-nav-link x-nav-partner"
               >
                 {lang === "SOM" ? "Goobaha" : "Destinations"}
               </button>
@@ -1501,7 +1509,7 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
               <button
                 onClick={() => setMenuOpen(true)}
                 aria-label="Open menu"
-                className="p-2.5 rounded-xl text-[#063d35] hover:bg-[#edf5f2]"
+                className="xasil-menu-trigger p-2.5 rounded-xl text-[#063d35] hover:bg-[#edf5f2]"
               >
                 <Menu className="w-6 h-6" />
               </button>
@@ -1533,7 +1541,11 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
                     setSelectedCategory("Stay");
                     setMenuOpen(false);
                   }}
-                  className="x-mobile-link"
+                  className={
+                    selectedCategory === "Stay"
+                      ? "x-mobile-link is-active"
+                      : "x-mobile-link"
+                  }
                 >
                   <Hotel className="w-5 h-5" />
                   {lang === "SOM" ? "Hoy & Hoteello" : "Stays & Hotels"}
@@ -1544,7 +1556,11 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
                     setSearchGuests(25);
                     setMenuOpen(false);
                   }}
-                  className="x-mobile-link"
+                  className={
+                    selectedCategory === "Hall"
+                      ? "x-mobile-link is-active"
+                      : "x-mobile-link"
+                  }
                 >
                   <Building2 className="w-5 h-5" />
                   {lang === "SOM" ? "Hoolal & Xaflado" : "Halls & Events"}
@@ -1888,9 +1904,9 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
         />
         <section className="max-w-7xl mx-auto px-4 lg:px-6 pt-5 pb-12">
           <div
-            className="relative overflow-hidden rounded-3xl min-h-[220px] shadow-xl border border-slate-200 flex items-center"
+            className="xasil-partner-banner relative overflow-hidden rounded-3xl min-h-[220px] shadow-xl border border-slate-200 flex items-center"
             style={{
-              backgroundImage: `linear-gradient(90deg, rgba(5,47,42,.96), rgba(6,61,53,.83) 55%, rgba(6,61,53,.30)), url(${HALL_IMAGE})`,
+              backgroundImage: `linear-gradient(90deg, rgba(4,39,41,.96), rgba(6,57,62,.83) 55%, rgba(6,57,62,.30)), url(${HALL_IMAGE})`,
               backgroundSize: "cover",
               backgroundPosition: "center",
             }}
@@ -1910,7 +1926,7 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
               </div>
               <button
                 onClick={() => setIsPartnerOpen(true)}
-                className="bg-[#0a5147] hover:bg-[#063d35] text-white font-black px-6 py-3.5 rounded-full text-xs transition shadow-lg shrink-0 w-full md:w-auto text-center"
+                className="x-partner-cta bg-[#0a5147] hover:bg-[#063d35] text-white font-black px-6 py-3.5 rounded-full text-xs transition shadow-lg shrink-0 w-full md:w-auto text-center"
               >
                 {t.registerPropertyBtn}
               </button>
@@ -1919,7 +1935,7 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
         </section>
       </div>
 
-      <footer className="bg-[#052f2a] text-white pt-14 pb-8 px-5 border-t border-white/10">
+      <footer className="xasil-footer bg-[#052f2a] text-white pt-14 pb-8 px-5 border-t border-white/10">
         <div className="max-w-7xl mx-auto">
           <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-10 pb-10">
             <div className="space-y-4 lg:pr-8">
