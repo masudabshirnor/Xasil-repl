@@ -1,0 +1,28 @@
+kind = "web"
+previewPath = "/"
+title = "XASIL Website Preview"
+description = "A preview of the supplied XASIL hotel, apartment, and event-hall booking website for Somalia."
+version = "1.0.0"
+id = "artifacts/xasil-preview"
+router = "path"
+
+[[services]]
+name = "web"
+paths = [ "/" ]
+localPort = 24055
+
+[services.development]
+run = "pnpm --filter @workspace/xasil-preview run dev"
+
+[services.production]
+build = [ "pnpm", "--filter", "@workspace/xasil-preview", "run", "build" ]
+serve = "static"
+publicDir = "artifacts/xasil-preview/dist/public"
+
+[[services.production.rewrites]]
+from = "/*"
+to = "/index.html"
+
+[services.env]
+PORT = "24055"
+BASE_PATH = "/"
