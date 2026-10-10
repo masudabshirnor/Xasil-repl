@@ -8,6 +8,7 @@ import {
   Headphones,
   ArrowRight,
   Building2,
+  Star,
 } from "lucide-react";
 const fallback = "/images/placeholder.svg";
 export default function Discovery({
@@ -271,7 +272,10 @@ const handleToggleShowAll = () => {
                           : "XASIL STAYS"}
                       </span>
                       {p.rating > 0 && (
-                        <span className="rating-pill">★ {p.rating}</span>
+                        <span className="rating-pill">
+                          <Star size={13} fill="currentColor" aria-hidden="true" />
+                          {p.rating}
+                        </span>
                       )}
                     </div>
                     <h3>

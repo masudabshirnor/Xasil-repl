@@ -1,0 +1,168 @@
+XASIL — Apply Consistent Brand Colors, Icons & UI Design Across the Entire Website
+
+Act as a senior UI/UX designer and React frontend engineer. Use the attached screenshot as the primary visual reference for the existing XASIL brand identity.
+
+I want the entire XASIL website to follow the same colors, icon style, button design, form styling, typography, and visual consistency shown in the screenshot — not just the homepage.
+
+1. Exact Brand Colors
+
+Use these existing XASIL brand colors consistently:
+
+* Deep Green: #06393E
+* Dark Green: #042729
+* Gold: #D39E43
+* Cream: #F6F4EE
+* Light Green: #EEF2EC
+* White: #FFFFFF
+
+Follow the screenshot’s visual balance:
+
+* Header: white or cream background, dark green logo and icons.
+* Main headings: deep green, bold and prominent.
+* Primary buttons and selected tabs: deep green backgrounds with gold text or accents.
+* Input fields and dropdowns: deep green backgrounds with white text and gold icons where appropriate.
+* Search panel: white or very light neutral background with subtle borders and shadows.
+* Property cards: white or cream surfaces with clear, readable information.
+* Section backgrounds: use deep green, cream, or white according to the section’s purpose.
+* Footer: deep green with white text and gold accents.
+
+Do not introduce unrelated colors or change the brand palette without a strong accessibility reason.
+
+2. Make All Icons Consistent
+
+Review every icon throughout the entire application, including:
+
+* Header and mobile navigation.
+* Destination and location fields.
+* Calendar and date selectors.
+* Guests and capacity selectors.
+* Search buttons.
+* Hotel and apartment cards.
+* Amenities and facilities.
+* Airport Transfer and transport options.
+* Wedding and event halls.
+* Booking details and booking history.
+* Login, account, and profile interfaces.
+* Admin dashboard and property management.
+* Forms, alerts, status indicators, and footer links.
+
+Use one coherent icon family, preferably the existing icon library already installed in the project. If Lucide is already available, use consistent Lucide icons.
+
+Icon rules:
+
+* Use consistent stroke width, size, alignment, and visual weight.
+* Use dark green or white for standard icons depending on the background.
+* Use gold for selected states, important actions, and brand accents.
+* Avoid mixing emoji, filled icons, outlined icons, and unrelated icon styles.
+* Avoid oversized icons or unnecessary decorative symbols.
+* Keep icons accessible and easy to recognize on mobile devices.
+* Do not replace meaningful icons with text symbols or random Unicode characters.
+
+Do not install another icon library if the existing one can meet the requirements.
+
+3. Standardize All Buttons and Form Controls
+
+Make buttons and inputs look like they belong to one professional design system.
+
+Primary buttons
+
+* Deep green background.
+* Gold text for important actions, following the screenshot.
+* Consistent height, padding, border radius, and typography.
+* Subtle hover, focus, active, and disabled states.
+
+Input fields and dropdowns
+
+* Use the screenshot’s deep green style where appropriate.
+* Maintain clear white text and readable placeholders.
+* Use gold icons for dates and important visual indicators.
+* Keep labels clear and consistently positioned.
+* Make dropdown arrows, calendar icons, and field heights consistent.
+
+Apply the design consistently to search forms, booking forms, account forms, airport transfer requests, and admin interfaces. However, prioritize usability and readability: dense admin tables should remain easy to scan rather than forcing every element to have a dark green background.
+
+4. Standardize the Entire Website
+
+Audit and update all existing pages, components, modals, cards, and interactive states so they share the same visual identity.
+
+This includes:
+
+* Header and navigation.
+* Hero section.
+* Stays (Hotels & Apartments).
+* Halls (Wedding & Events).
+* Airport Pick & Drop / Airport Transfer.
+* Search panel and filters.
+* Property listings and details.
+* Booking and checkout flow.
+* My Bookings.
+* Authentication and user account interfaces.
+* Hotel-owner partnership and listing interfaces.
+* Admin dashboard.
+* Alerts, loading states, empty states, and confirmation dialogs.
+* Footer.
+
+Every section should look like part of the same XASIL platform. Do not leave older components with inconsistent colors or icons.
+
+5. Create a Reusable Design System
+
+Inspect the current project before editing.
+
+Where appropriate, centralize the color palette and reusable styles in the existing CSS files or shared theme variables.
+
+Create or reuse consistent styles for:
+
+* Primary and secondary buttons.
+* Form inputs and dropdowns.
+* Search panels.
+* Property cards.
+* Section headings.
+* Icons.
+* Badges and status labels.
+* Modals and dialogs.
+* Spacing, border radii, shadows, and typography.
+
+Prefer reusing existing components and styles instead of copying similar CSS across many files.
+
+6. Preserve the Existing Application
+
+This is an existing React + Vite + Supabase project.
+
+Do not rebuild the application from scratch.
+
+* Preserve the existing functionality and business logic.
+* Do not change the database schema or Supabase RLS policies for a visual redesign.
+* Do not break authentication, bookings, property management, admin permissions, or airport transfer requests.
+* Do not remove existing Somali or English translations.
+* Do not create duplicate forms or duplicate UI sections.
+* Do not replace real property data with sample content.
+* Avoid unnecessary dependencies and major architectural changes.
+* Keep the existing XASIL logo and brand identity.
+
+Inspect the current codebase first, identify shared components and existing styles, and then implement the redesign in manageable steps.
+
+7. Responsive Design and Quality Checks
+
+The updated design must work well on iPhones, Android devices, tablets, and desktop screens.
+
+Check:
+
+* Text wrapping and truncation.
+* Button sizes and tap targets.
+* Dropdown and calendar visibility.
+* Icon alignment.
+* Form spacing.
+* Horizontal overflow.
+* Modal sizing.
+* Property card layouts.
+* Navigation on small screens.
+
+After implementation, run npm run build, fix errors introduced by your changes, and summarize the files modified and the checks completed. Do not claim a test passed unless you actually ran it.
+
+Final Goal
+
+The attached screenshot defines the desired visual direction for XASIL: deep green, elegant gold, clean white and cream surfaces, bold typography, rounded controls, and consistent professional icons.
+
+Apply this identity across the entire platform so every page feels cohesive, recognizable, modern, and trustworthy.
+
+Prioritize consistency and usability over unnecessary visual effects. Preserve the existing functionality while improving the design.

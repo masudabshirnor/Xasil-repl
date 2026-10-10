@@ -440,3 +440,613 @@ body,
     padding: 10px;
   }
 }
+
+/* XASIL identity system: Somali-first hospitality, clear and grounded. */
+.xasil-page {
+  --brand-deep: #06393e;
+  --brand-dark: #042729;
+  --brand-gold: #d39e43;
+  --brand-cream: #f6f4ee;
+  --brand-soft: #eef2ec;
+  --brand-white: #ffffff;
+  --brand-line: #dce4dc;
+  --brand-muted: #536a65;
+  color: var(--brand-dark);
+  background: var(--brand-cream);
+}
+
+.xasil-page,
+.xasil-page [class*="bg-stone-50"],
+.xasil-page [class*="bg-[#f7faf8]"],
+.xasil-page [class*="bg-[#f5f7f6]"],
+.xasil-page [class*="bg-[#f8faf8]"],
+.xasil-page [class*="bg-[#f7f9f8]"] {
+  background-color: var(--brand-cream);
+}
+
+.xasil-page [class*="bg-white"],
+.xasil-page [class*="bg-white/96"],
+.xasil-page [class*="bg-white/97"] {
+  background-color: var(--brand-white);
+}
+
+.xasil-page [class*="bg-[#edf5f2]"],
+.xasil-page [class*="bg-[#ecf2ec]"],
+.xasil-page [class*="bg-[#e7efe9]"],
+.xasil-page [class*="bg-[#f0f5ef]"],
+.xasil-page [class*="bg-[#f2f6f0]"],
+.xasil-page [class*="bg-[#e6ede4]"] {
+  background-color: var(--brand-soft);
+}
+
+.xasil-page [class*="bg-[#063d35]"],
+.xasil-page [class*="bg-[#052f2a]"],
+.xasil-page [class*="bg-[#0a5147]"] {
+  background-color: var(--brand-deep);
+}
+
+.xasil-page [class*="text-[#063d35]"],
+.xasil-page [class*="text-[#052f2a]"],
+.xasil-page [class*="text-teal-800"] {
+  color: var(--brand-deep);
+}
+
+.xasil-page [class*="text-[#D6A64A]"],
+.xasil-page [class*="text-[#d6a64a]"],
+.xasil-page [class*="text-[#D39E43]"] {
+  color: var(--brand-gold);
+}
+
+.xasil-page [class*="border-[#D6A64A]"],
+.xasil-page [class*="border-[#d6a64a]"] {
+  border-color: var(--brand-gold);
+}
+
+.xasil-page [class*="border-slate-200"],
+.xasil-page [class*="border-slate-100"],
+.xasil-page [class*="border-stone-200"] {
+  border-color: var(--brand-line);
+}
+
+.xasil-page [class*="text-slate-900"],
+.xasil-page [class*="text-slate-800"],
+.xasil-page [class*="text-neutral-800"] {
+  color: var(--brand-dark);
+}
+
+.xasil-page [class*="text-slate-700"],
+.xasil-page [class*="text-slate-600"],
+.xasil-page [class*="text-slate-500"] {
+  color: var(--brand-muted);
+}
+
+.xasil-page :focus-visible {
+  outline: 3px solid var(--brand-gold);
+  outline-offset: 3px;
+}
+
+.xasil-page input:not([type="checkbox"]):focus,
+.xasil-page input:not([type="radio"]):focus,
+.xasil-page select:focus,
+.xasil-page textarea:focus,
+.xasil-page .filter-input:focus-within {
+  border-color: var(--brand-gold);
+  box-shadow: 0 0 0 3px rgb(211 158 67 / 20%);
+}
+
+.xasil-page :disabled {
+  cursor: not-allowed;
+  opacity: .58;
+}
+
+/* Light masthead with the original dark-green and gold wordmark. */
+.xasil-main-header {
+  color: var(--brand-deep);
+  background: rgb(246 244 238 / 97%) !important;
+  border-color: var(--brand-line) !important;
+  box-shadow: 0 6px 22px rgb(4 39 41 / 7%) !important;
+}
+
+.xasil-main-header .x-nav-link {
+  color: var(--brand-deep);
+}
+
+.xasil-main-header .x-nav-link:hover,
+.xasil-main-header .x-nav-link.is-active {
+  color: var(--brand-deep);
+  background: var(--brand-soft);
+}
+
+.xasil-main-header .x-nav-link.is-active {
+  box-shadow: inset 0 -2px var(--brand-gold);
+}
+
+.xasil-main-header .x-nav-link.x-nav-partner {
+  color: var(--brand-deep);
+  background: rgb(211 158 67 / 11%);
+  border-color: rgb(211 158 67 / 42%);
+}
+
+.xasil-main-header .x-nav-link.x-nav-partner:hover {
+  color: var(--brand-dark);
+  background: rgb(211 158 67 / 20%);
+}
+
+.xasil-main-header .x-outline-btn {
+  color: var(--brand-deep);
+  background: var(--brand-white);
+  border-color: var(--brand-line);
+}
+
+.xasil-main-header .x-outline-btn:hover {
+  color: var(--brand-dark);
+  background: var(--brand-soft);
+  border-color: var(--brand-gold);
+}
+
+.xasil-main-header .x-primary-btn {
+  color: var(--brand-gold);
+  background: var(--brand-deep);
+  border-color: var(--brand-deep);
+}
+
+.xasil-main-header .x-primary-btn:hover {
+  color: var(--brand-gold);
+  background: var(--brand-dark);
+}
+
+.xasil-main-header svg #darkGreenGrad stop {
+  stop-color: var(--brand-deep) !important;
+}
+
+.xasil-main-header svg #richGoldGrad stop {
+  stop-color: var(--brand-gold) !important;
+}
+
+.xasil-main-header svg text {
+  fill: var(--brand-deep) !important;
+}
+
+.xasil-main-header .xasil-menu-trigger {
+  color: var(--brand-deep) !important;
+}
+
+.xasil-main-header .xasil-menu-trigger:hover {
+  background: var(--brand-soft) !important;
+}
+
+/* Hero and search: calm cream canvas, decisive green controls. */
+.xasil-page .pro-hero {
+  color: var(--brand-dark);
+  background: var(--brand-cream);
+  padding-top: 42px;
+}
+
+.xasil-page .pro-hero::before {
+  background:
+    radial-gradient(ellipse at 3% 0%, rgb(211 158 67 / 10%), transparent 40%),
+    linear-gradient(120deg, var(--brand-cream), var(--brand-soft));
+}
+
+.xasil-page .pro-hero h1,
+.xasil-page .pro-hero .hero-kicker,
+.xasil-page .pro-hero-copy > p,
+.xasil-page .hero-promise {
+  color: var(--brand-deep);
+}
+
+.xasil-page .pro-hero h1 em,
+.xasil-page .hero-kicker > span,
+.xasil-page .hero-promise svg {
+  color: var(--brand-gold);
+}
+
+.xasil-page .hero-kicker > span {
+  background: var(--brand-gold);
+}
+
+.xasil-page .hero-photo-frame {
+  border-color: rgb(211 158 67 / 48%);
+  box-shadow: 0 24px 58px rgb(4 39 41 / 17%);
+}
+
+.xasil-page .pro-search-shell {
+  background: var(--brand-white);
+  color: var(--brand-dark);
+  border-color: var(--brand-line);
+  box-shadow: 0 22px 52px rgb(4 39 41 / 12%);
+}
+
+.xasil-page .pro-search-tabs {
+  border-color: var(--brand-line);
+}
+
+.xasil-page .pro-search-tabs .x-tab {
+  color: var(--brand-muted);
+}
+
+.xasil-page .pro-search-tabs .x-tab-active {
+  color: var(--brand-gold);
+  background: var(--brand-deep);
+  border-bottom-color: var(--brand-gold);
+  border-radius: 10px 10px 0 0;
+}
+
+.xasil-page .pro-search-tabs .x-tab-active small {
+  color: rgb(246 244 238 / 76%);
+}
+
+.xasil-page .pro-search-shell form {
+  background: var(--brand-soft);
+}
+
+.xasil-page .pro-search-shell .x-field {
+  color: var(--brand-gold);
+  background: var(--brand-deep);
+  border-color: var(--brand-deep);
+}
+
+.xasil-page .pro-search-shell .x-field:focus-within {
+  border-color: var(--brand-gold);
+  box-shadow: 0 0 0 3px rgb(211 158 67 / 20%);
+}
+
+.xasil-page .pro-search-shell .x-field > svg {
+  color: var(--brand-gold);
+}
+
+.xasil-page .pro-search-shell .x-select,
+.xasil-page .pro-search-shell .date-trigger {
+  color: var(--brand-white);
+}
+
+.xasil-page .pro-search-shell .x-select option {
+  color: var(--brand-dark);
+  background: var(--brand-white);
+}
+
+.xasil-page .pro-search-shell .x-field-label {
+  color: var(--brand-deep);
+}
+
+.xasil-page .pro-search-shell .x-search-btn,
+.xasil-page .result-price button,
+.xasil-page .result-empty button,
+.xasil-page button[class*="bg-[#063d35]"],
+.xasil-page .x-partner-cta,
+.xasil-page .pro-primary,
+.xasil-page .mobile-booking button {
+  color: var(--brand-gold);
+  background: var(--brand-deep);
+  border-color: var(--brand-deep);
+  box-shadow: 0 7px 16px rgb(4 39 41 / 12%);
+}
+
+.xasil-page .pro-search-shell .x-search-btn:hover,
+.xasil-page .result-price button:hover,
+.xasil-page .result-empty button:hover,
+.xasil-page .x-partner-cta:hover,
+.xasil-page .pro-primary:hover,
+.xasil-page .mobile-booking button:hover {
+  color: var(--brand-gold);
+  background: var(--brand-dark);
+}
+
+.xasil-page .x-field-label,
+.xasil-page .search-footnote,
+.xasil-page .city-shortcuts > span {
+  color: var(--brand-muted);
+}
+
+.xasil-page .search-footnote svg,
+.xasil-page .eyebrow,
+.xasil-page .property-kind {
+  color: var(--brand-gold);
+}
+
+.xasil-page .city-shortcuts button {
+  color: var(--brand-deep);
+  background: var(--brand-white);
+  border-color: var(--brand-line);
+}
+
+.xasil-page .city-shortcuts button.active,
+.xasil-page .city-shortcuts button:hover {
+  color: var(--brand-deep);
+  background: var(--brand-soft);
+  border-color: var(--brand-gold);
+}
+
+/* Discovery cards and filters remain quiet, readable surfaces. */
+.xasil-page .discovery h2,
+.xasil-page .discovery-heading h2 {
+  color: var(--brand-deep);
+}
+
+.xasil-page .discovery-filters,
+.xasil-page .property-result,
+.xasil-page .result-empty {
+  background: var(--brand-white);
+  border-color: var(--brand-line);
+}
+
+.xasil-page .discovery-filters input:not([type="checkbox"]),
+.xasil-page .filter-input,
+.xasil-page .results-toolbar select {
+  color: var(--brand-dark);
+  background: var(--brand-cream);
+  border-color: var(--brand-line);
+}
+
+.xasil-page .filter-toggle {
+  color: var(--brand-deep);
+  background: var(--brand-white);
+  border-color: var(--brand-line);
+}
+
+.xasil-page .filter-toggle:hover {
+  border-color: var(--brand-gold);
+}
+
+.xasil-page .filter-amenities input {
+  accent-color: var(--brand-deep);
+}
+
+.xasil-page .support-note,
+.xasil-page .rating-pill,
+.xasil-page .amenity-chips span {
+  color: var(--brand-deep);
+  background: var(--brand-soft);
+}
+
+.xasil-page .support-note > svg {
+  color: var(--brand-deep);
+}
+
+.xasil-page .property-result {
+  border-radius: 18px;
+  box-shadow: 0 8px 24px rgb(4 39 41 / 5%);
+}
+
+.xasil-page .property-result:hover {
+  box-shadow: 0 16px 36px rgb(4 39 41 / 12%);
+}
+
+.xasil-page .result-info h3,
+.xasil-page .result-price > strong {
+  color: var(--brand-deep);
+}
+
+.xasil-page .result-price {
+  border-left-color: var(--brand-line);
+}
+
+.xasil-page .xasil-partner-banner {
+  border-color: rgb(211 158 67 / 42%);
+  box-shadow: 0 20px 42px rgb(4 39 41 / 14%);
+}
+
+.xasil-page .xasil-footer {
+  color: var(--brand-cream);
+  background: var(--brand-deep);
+  border-color: rgb(211 158 67 / 48%);
+}
+
+.xasil-page .xasil-footer h4 {
+  color: var(--brand-gold);
+}
+
+.xasil-page .xasil-footer .text-slate-400,
+.xasil-page .xasil-footer .text-slate-300 {
+  color: rgb(246 244 238 / 78%);
+}
+
+.xasil-page .xasil-footer .text-slate-500,
+.xasil-page .xasil-footer .text-slate-600 {
+  color: rgb(246 244 238 / 66%);
+}
+
+.xasil-page .xasil-footer a,
+.xasil-page .xasil-footer button {
+  transition: color .2s ease, background-color .2s ease, border-color .2s ease;
+}
+
+.xasil-page .xasil-footer a:hover,
+.xasil-page .xasil-footer button:hover {
+  color: var(--brand-gold);
+}
+
+.xasil-page .xasil-footer .text-emerald-400 {
+  color: var(--brand-gold);
+}
+
+.xasil-page .x-mobile-link.is-active {
+  color: var(--brand-gold);
+  background: var(--brand-deep);
+}
+
+/* Details, request-preview dialogs, and local receipt. */
+.xasil-page .details-shell,
+.xasil-page .booking-dialog,
+.xasil-page .receipt-dialog,
+.xasil-page .xasil-page [class*="rounded-[2rem]"] {
+  border-color: var(--brand-line);
+}
+
+.xasil-page .detail-navigation {
+  border-color: var(--brand-line);
+}
+
+.xasil-page .detail-navigation button {
+  color: var(--brand-deep);
+}
+
+.xasil-page .detail-navigation button:hover {
+  color: var(--brand-dark);
+  box-shadow: inset 0 -2px var(--brand-gold);
+}
+
+.xasil-page .details-shell aside > div {
+  background: var(--brand-soft);
+}
+
+.xasil-page .booking-preview-button {
+  color: var(--brand-deep);
+  background: var(--brand-white);
+  border-color: rgb(6 57 62 / 36%);
+}
+
+.xasil-page .receipt-overlay {
+  background: rgb(4 39 41 / 84%);
+}
+
+.xasil-page .receipt-visual {
+  background: var(--brand-soft);
+}
+
+.xasil-page .receipt-close {
+  color: var(--brand-deep);
+  background: var(--brand-cream);
+  border-color: var(--brand-line);
+}
+
+.xasil-page .receipt-check {
+  color: var(--brand-deep);
+  background: var(--brand-soft);
+  border-color: var(--brand-line);
+}
+
+.xasil-page .receipt-facts,
+.xasil-page .receipt-text {
+  color: var(--brand-dark);
+  background: var(--brand-cream);
+  border-color: var(--brand-line);
+}
+
+.xasil-page .receipt-reference,
+.xasil-page .share-status {
+  color: var(--brand-deep) !important;
+}
+
+.xasil-page .receipt-secondary button {
+  color: var(--brand-deep);
+  background: var(--brand-white);
+  border-color: var(--brand-line);
+}
+
+.xasil-page .whatsapp-details {
+  color: var(--brand-deep);
+  background: var(--brand-soft);
+  border-color: var(--brand-line);
+}
+
+.xasil-page .date-panel {
+  color: var(--brand-dark);
+  background: var(--brand-white);
+  border-color: var(--brand-line);
+  box-shadow: 0 16px 50px rgb(4 39 41 / 16%);
+}
+
+.xasil-page .date-grid .selected {
+  color: var(--brand-gold);
+  background: var(--brand-deep);
+}
+
+.xasil-page .date-grid .in-range {
+  background: rgb(211 158 67 / 18%);
+}
+
+.xasil-page .date-grid button:hover:not(:disabled) {
+  outline-color: var(--brand-gold);
+}
+
+/* Admin workspace: deliberately high-contrast, quiet, and table-friendly. */
+.xasil-page [class*="bg-[#f5f7f6]"],
+.xasil-page [class*="bg-[#f7f9f8]"] {
+  background-color: var(--brand-cream);
+}
+
+.xasil-page [class*="text-slate-400"],
+.xasil-page [class*="text-slate-300"] {
+  color: #61736d;
+}
+
+.xasil-page [class*="border-slate-200/80"],
+.xasil-page [class*="border-slate-100"] {
+  border-color: var(--brand-line);
+}
+
+.xasil-page aside[class*="bg-[#063d35]"] {
+  color: var(--brand-cream);
+  background: var(--brand-deep);
+}
+
+.xasil-page aside[class*="bg-[#063d35]"] button[class*="bg-white"] {
+  color: var(--brand-gold);
+  background: var(--brand-dark);
+  box-shadow: inset 3px 0 var(--brand-gold);
+}
+
+.xasil-page aside[class*="bg-[#063d35]"] button[class*="bg-white"] span {
+  color: var(--brand-gold);
+  background: rgb(211 158 67 / 16%);
+}
+
+.xasil-page aside[class*="bg-[#063d35]"] button:not([class*="bg-white"]):hover {
+  color: var(--brand-gold);
+  background: rgb(246 244 238 / 8%);
+}
+
+.xasil-page [class*="text-[#063d35]"] {
+  color: var(--brand-deep);
+}
+
+.xasil-page input:not([type="checkbox"]),
+.xasil-page select,
+.xasil-page textarea {
+  color: var(--brand-dark);
+}
+
+.xasil-page [class*="bg-red-50"],
+.xasil-page [class*="bg-red-100"] {
+  color: #7d2d2d;
+}
+
+.xasil-page .booking-dialog,
+.xasil-page .receipt-dialog {
+  width: min(100%, 720px);
+  max-height: min(92dvh, 900px);
+  overflow-y: auto;
+}
+
+@media (max-width: 767px) {
+  .xasil-page .pro-hero {
+    padding-top: 28px;
+  }
+
+  .xasil-page .pro-search-shell form {
+    background: var(--brand-soft);
+  }
+
+  .xasil-page .pro-search-shell form > button {
+    width: 100%;
+  }
+
+  .xasil-page .booking-dialog,
+  .xasil-page .receipt-dialog {
+    max-height: 96dvh;
+    border-radius: 18px;
+  }
+
+  .xasil-page .result-price {
+    border-top-color: var(--brand-line);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .xasil-page *,
+  .xasil-page *::before,
+  .xasil-page *::after {
+    scroll-behavior: auto !important;
+  }
+}
