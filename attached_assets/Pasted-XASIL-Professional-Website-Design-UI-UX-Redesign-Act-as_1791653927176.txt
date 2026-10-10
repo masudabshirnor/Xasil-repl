@@ -1,0 +1,223 @@
+XASIL — Professional Website Design & UI/UX Redesign
+
+Act as a senior UI/UX designer and experienced React frontend developer. Redesign the existing XASIL booking platform to look premium, modern, trustworthy, visually consistent, and professional across desktop, tablet, and mobile devices.
+
+1. Brand Identity & Color System
+
+Use the following brand colors consistently throughout the entire website:
+
+* Deep Green: #06393E — primary brand color for the header, hero, major section backgrounds, and footer.
+* Dark Green: #042729 — darker backgrounds, hover states, and subtle contrast.
+* Gold: #D39E43 — primary CTA buttons, active tabs, icons, dividers, highlights, and small decorative details.
+* Cream: #F6F4EE — soft page backgrounds and warm neutral surfaces.
+* Light Green: #EEF2EC — subtle backgrounds for secondary sections, filters, and supporting content.
+* White: #FFFFFF — search panels, hotel cards, forms, and content areas where readability is essential.
+
+Avoid introducing unnecessary colors. Use a consistent design system for typography, spacing, borders, shadows, button styles, and corner radii.
+
+2. Header / Navigation
+
+Design a clean, elegant header using Deep Green (#06393E).
+
+Requirements:
+
+* Make the XASIL logo clearly visible and give it sufficient breathing room.
+* Use white or cream navigation text.
+* Highlight the active navigation item with gold.
+* Make important actions such as “List Your Property” visually clear.
+* Keep the navigation aligned, balanced, and uncluttered.
+* Ensure the header works properly on mobile screens.
+* Maintain consistent spacing between the logo, navigation, language selector, and action buttons.
+
+The header should feel like a trusted hospitality and travel brand, not a generic template.
+
+3. Hero Section
+
+Create a visually strong hero section using Deep Green with a subtle, elegant background image, dark overlay, or gradient.
+
+Requirements:
+
+* Use high-contrast typography and clear visual hierarchy.
+* Keep the main headline readable and prominent.
+* Use gold sparingly to emphasize important words or details.
+* Add subtle background imagery related to hospitality, hotels, or travel only if it improves the design.
+* Ensure text remains readable against the background.
+* Keep the section spacious and premium without making it excessively tall.
+* Make the hero responsive across desktop and mobile.
+
+The hero should communicate trust, comfort, convenience, and the simplicity of booking through XASIL.
+
+4. Search Panel — Main Visual Focus
+
+Place a large white or cream search panel prominently over the green hero section, with a refined overlapping effect if appropriate.
+
+The panel must:
+
+* Have a clean layout and clear field labels.
+* Use consistent input heights, spacing, borders, and corner radii.
+* Provide clear focus and selected states.
+* Use gold for the primary search CTA.
+* Make the active service tab visually obvious.
+* Avoid excessive borders, nested cards, or unnecessary decoration.
+* Remain easy to use on mobile, with fields stacked logically.
+
+Preserve the existing search functionality, including the current accommodation and event-hall services. Do not remove existing fields or change their behavior without a clear technical reason.
+
+5. Hotel & Property Cards
+
+Use white or cream cards against a carefully balanced background.
+
+Each property card should have:
+
+* A high-quality property image with consistent aspect ratio.
+* A clear property name and location.
+* Readable pricing information.
+* Relevant amenities and property details.
+* A clear primary action, such as “View Details” or the existing equivalent.
+* Consistent image sizing, padding, spacing, and typography.
+* Subtle shadows or borders instead of heavy visual effects.
+* Consistent placement of badges, ratings, and other metadata where those features already exist.
+
+Make the cards visually attractive without sacrificing the clarity of the information customers need to make a booking decision.
+
+Use a consistent card system throughout search results and related property sections.
+
+6. Section Backgrounds & Page Rhythm
+
+Create a consistent visual rhythm throughout the website:
+
+* Use Deep Green for major brand sections and selected feature sections.
+* Use Cream for general page backgrounds.
+* Use White for content-heavy areas, search panels, forms, and property cards.
+* Use Light Green for subtle secondary sections.
+* Use Gold for small accents, separators, icons, active states, and important actions.
+
+Alternate section backgrounds only when it improves readability and creates a natural flow.
+
+Avoid making every section a separate boxed card. Use whitespace, alignment, and typography to distinguish content naturally.
+
+7. Buttons, Forms & Interactive Elements
+
+Create one consistent style for all buttons and interactive components.
+
+Primary buttons:
+
+* Gold background.
+* Dark green text where contrast permits.
+* Clear, readable typography.
+* Consistent height and padding.
+* Subtle hover, active, focus, and disabled states.
+
+Secondary buttons:
+
+* Transparent, cream, white, or dark green backgrounds depending on context.
+* Consistent border and typography styles.
+
+Forms:
+
+* Consistent labels and input dimensions.
+* Clear validation and error states.
+* Visible keyboard focus.
+* Accessible color contrast.
+* No overlapping labels, clipped text, or cramped fields.
+
+Use gold intentionally. Do not turn every icon, line, or text element gold.
+
+8. Typography
+
+Use a modern, professional, highly readable typography system.
+
+* Establish a clear hierarchy for headings, subheadings, body text, labels, and captions.
+* Keep heading sizes and font weights consistent.
+* Avoid excessive font sizes and overly bold text.
+* Use comfortable line heights.
+* Ensure Somali text displays correctly and naturally.
+* Maintain readable typography on small mobile screens.
+
+Preserve XASIL’s Somali-first experience and existing English-language option. Do not replace Somali copy with English or invent translations that change the meaning of existing content.
+
+9. Footer
+
+Use Deep Green (#06393E) as the main footer background.
+
+Requirements:
+
+* White or cream text for readability.
+* Gold accents for headings, separators, icons, or important links.
+* Clear grouping of existing navigation, support, property-owner, and contact links.
+* Balanced spacing and alignment.
+* A clean copyright and brand section.
+* Responsive layout on mobile.
+
+Keep the footer professional and informative without overcrowding it.
+
+10. Responsive Design
+
+The entire website must work properly on:
+
+* Desktop.
+* Tablet.
+* iPhone and other mobile devices.
+
+On mobile:
+
+* Stack search fields logically.
+* Make buttons easy to tap.
+* Prevent horizontal overflow.
+* Keep text readable.
+* Ensure property cards fit the available width.
+* Make navigation compact and usable.
+* Check modal dialogs, forms, menus, and date selectors for clipping or overflow.
+
+Do not design only for desktop and assume the mobile layout will work automatically.
+
+11. Technical Constraints — Critical
+
+This is an existing, working React + Vite + Supabase application.
+
+Before editing:
+
+1. Inspect the existing project structure and current UI.
+2. Identify the existing color definitions and reusable components.
+3. Review src/App.jsx, src/App.css, src/index.css, and related components.
+4. Determine which components are shared across multiple pages or sections.
+5. Present a concise implementation plan before making substantial changes.
+
+While implementing:
+
+* Preserve the existing Supabase configuration, database schema, authentication, Row Level Security (RLS), booking workflow, property management, admin functionality, and all working integrations.
+* Do not change database tables, policies, environment variables, or authentication logic for a visual redesign.
+* Do not remove working features or existing Somali translations.
+* Do not introduce unnecessary dependencies.
+* Avoid duplicating components or creating a second search form.
+* Reuse existing components where appropriate.
+* Prefer small, maintainable changes over rewriting the entire application.
+* Avoid putting the entire redesign into the already large App.jsx.
+* Keep business logic separate from presentation where practical.
+* Do not use placeholder content to replace real property data.
+
+12. Quality Assurance
+
+After implementation:
+
+1. Run the production build using npm run build.
+2. Fix any build errors introduced by the changes.
+3. Check for missing images, broken layouts, inconsistent spacing, and console errors.
+4. Test the header, search panel, accommodation cards, event-hall functionality, navigation, modals, forms, and footer.
+5. Verify that booking, login, and admin functions remain operational.
+6. Check the design at desktop and iPhone-sized viewport widths.
+7. Summarize the files changed and the improvements made.
+8. Report any checks that could not be completed rather than claiming they passed.
+
+Final Design Direction
+
+The final result should feel like a premium, trustworthy Somali hospitality and booking brand.
+
+Visual identity:
+Deep Green foundation + elegant Gold accents + Cream backgrounds + clean White content cards.
+
+The design should be cohesive across every section, with consistent spacing, typography, buttons, forms, cards, and responsive behavior.
+
+Prioritize clarity, trust, simplicity, and a polished user experience over flashy animations or unnecessary decoration.
+
+Do not rebuild the website from scratch. Improve the existing XASIL platform while preserving its functionality and identity.
