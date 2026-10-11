@@ -173,12 +173,6 @@ const CITIES = {
   Dhuusamareeb: ["Dayah", "Hodan", "Horseed", "Waberi", "Waharadde"],
 };
 const CITY_LIST = Object.keys(CITIES);
-const AIRPORT_OPTIONS = {
-  Muqdisho: ["Aden Adde International Airport"],
-  Hargeysa: ["Egal International Airport"],
-  Garoowe: ["Garowe International Airport"],
-  Dhuusamareeb: ["Dhuusamareeb Airport"],
-};
 
 // Representative local-only preview inventory. No request is made to a
 // production listings service; all images are shipped with this artifact.
@@ -373,18 +367,10 @@ export default function App() {
   const [transferForm, setTransferForm] = useState({
     type: "pickup",
     city: "",
-    district: "",
-    airport: "",
-    customAirport: "",
-    terminal: "",
     location: "",
     date: "",
     time: "",
     passengers: "1",
-    bags: "0",
-    customerName: "",
-    phone: "",
-    notes: "",
   });
   const [transferRequestPreview, setTransferRequestPreview] = useState(null);
   const [transferFormError, setTransferFormError] = useState("");
@@ -1729,7 +1715,9 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
               <span className="hero-photo-mark">X.</span>
             </div>
           </div>
-          <div className="pro-search-shell">
+          <div
+            className={`pro-search-shell ${activeServiceTab === "Airport" ? "is-transfer-open fixed inset-0" : ""}`}
+          >
             <div
               className="pro-search-tabs"
               role="tablist"
@@ -1784,14 +1772,39 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
             </div>
 
             {activeServiceTab === "Airport" ? (
+              <div
+                className="x-transfer-modal-backdrop"
+                onClick={(event) => {
+                  if (event.target === event.currentTarget) {
+                    setActiveServiceTab(selectedCategory === "Hall" ? "Hall" : "Stay");
+                  }
+                }}
+              >
               <form
                 id="service-search-panel"
                 role="tabpanel"
                 aria-labelledby="service-tab-airport"
                 noValidate
                 onSubmit={handleTransferSubmit}
-                className="x-transfer-form"
+                className="x-transfer-form x-transfer-modal-card"
               >
+                <header className="x-transfer-modal-header">
+                  <div>
+                    <span>{lang === "SOM" ? "XASIL GAADIID" : "XASIL TRANSFERS"}</span>
+                    <h2 id="airport-transfer-title">Airport Transfer</h2>
+                  </div>
+                  <button
+                    type="button"
+                    className="x-transfer-modal-close"
+                    aria-label="Close"
+                    title={lang === "SOM" ? "Xir" : "Close"}
+                    onClick={() =>
+                      setActiveServiceTab(selectedCategory === "Hall" ? "Hall" : "Stay")
+                    }
+                  >
+                    <X size={21} aria-hidden="true" />
+                  </button>
+                </header>
                 <div className="x-transfer-fields">
                   <fieldset className="x-transfer-type-fieldset">
                     <legend className="x-field-label">
@@ -1825,7 +1838,7 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
                         />
                         <span>
                           <strong>Airport Drop-off</strong>
-                          <small>U geynta garoonka</small>
+                          <small>Geynta garoonka</small>
                         </span>
                       </label>
                     </div>
@@ -1841,17 +1854,7 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
                         id="transfer-city"
                         required
                         value={transferForm.city}
-                        onChange={(e) => {
-                          setTransferForm((current) => ({
-                            ...current,
-                            city: e.target.value,
-                            district: "",
-                            airport: "",
-                            customAirport: "",
-                          }));
-                          setTransferRequestPreview(null);
-                          setTransferFormError("");
-                        }}
+                        onChange={(e) => updateTransferField("city", e.target.value)}
                       >
                         <option value="" disabled>
                           {lang === "SOM" ? "Dooro magaalo" : "Select a city"}
@@ -1867,114 +1870,10 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
                   </div>
 
                   <div className="x-transfer-field">
-                    <label className="x-field-label" htmlFor="transfer-district">
-                      {transferForm.type === "pickup"
-                        ? lang === "SOM"
-                          ? "Degmada loo socdo"
-                          : "Destination district"
-                        : lang === "SOM"
-                          ? "Degmada lagaa qaadayo"
-                          : "Pickup district"}
-                    </label>
-                    <div className="x-field">
-                      <MapIcon className="w-4 h-4" aria-hidden="true" />
-                      <select
-                        id="transfer-district"
-                        required
-                        disabled={!transferForm.city}
-                        value={transferForm.district}
-                        onChange={(e) => updateTransferField("district", e.target.value)}
-                      >
-                        <option value="" disabled>
-                          {lang === "SOM" ? "Dooro degmo" : "Select a district"}
-                        </option>
-                        {(CITIES[transferForm.city] || []).map((district) => (
-                          <option key={district} value={district}>
-                            {district}
-                          </option>
-                        ))}
-                      </select>
-                      <ChevronDown className="w-4 h-4 opacity-70" aria-hidden="true" />
-                    </div>
-                  </div>
-
-                  <div className="x-transfer-field">
-                    <label className="x-field-label" htmlFor="transfer-airport">
-                      {transferForm.type === "pickup"
-                        ? lang === "SOM"
-                          ? "Garoonka imaatinka"
-                          : "Arrival airport"
-                        : lang === "SOM"
-                          ? "Garoonka bixitaanka"
-                          : "Departure airport"}
-                    </label>
-                    <div className="x-field">
-                      <Plane className="w-4 h-4" aria-hidden="true" />
-                      <select
-                        id="transfer-airport"
-                        required
-                        disabled={!transferForm.city}
-                        value={transferForm.airport}
-                        onChange={(e) => updateTransferField("airport", e.target.value)}
-                      >
-                        <option value="" disabled>
-                          {lang === "SOM" ? "Dooro garoonka" : "Select an airport"}
-                        </option>
-                        {(AIRPORT_OPTIONS[transferForm.city] || []).map((airport) => (
-                          <option key={airport} value={airport}>
-                            {airport}
-                          </option>
-                        ))}
-                        <option value="Other">
-                          {lang === "SOM" ? "Garoon kale" : "Other airport"}
-                        </option>
-                      </select>
-                      <ChevronDown className="w-4 h-4 opacity-70" aria-hidden="true" />
-                    </div>
-                  </div>
-
-                  {transferForm.airport === "Other" && (
-                    <div className="x-transfer-field">
-                      <label className="x-field-label" htmlFor="transfer-custom-airport">
-                        {lang === "SOM" ? "Magaca garoonka" : "Airport name"}
-                      </label>
-                      <div className="x-field">
-                        <Plane className="w-4 h-4" aria-hidden="true" />
-                        <input
-                          id="transfer-custom-airport"
-                          required
-                          value={transferForm.customAirport}
-                          onChange={(e) => updateTransferField("customAirport", e.target.value)}
-                          placeholder={lang === "SOM" ? "Geli magaca garoonka" : "Enter airport name"}
-                        />
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="x-transfer-field">
-                    <label className="x-field-label" htmlFor="transfer-terminal">
-                      {lang === "SOM" ? "Terminal / irid (ikhtiyaari)" : "Terminal / gate (optional)"}
-                    </label>
-                    <div className="x-field">
-                      <Plane className="w-4 h-4" aria-hidden="true" />
-                      <input
-                        id="transfer-terminal"
-                        value={transferForm.terminal}
-                        onChange={(e) => updateTransferField("terminal", e.target.value)}
-                        placeholder={lang === "SOM" ? "Terminal ama iridda" : "Terminal or gate"}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="x-transfer-field">
                     <label className="x-field-label" htmlFor="transfer-location">
-                      {transferForm.type === "pickup"
-                        ? lang === "SOM"
-                          ? "Hoteelka / meesha loo socdo"
-                          : "Hotel / destination location"
-                        : lang === "SOM"
-                          ? "Cinwaanka lagaa qaadayo"
-                          : "Pickup address"}
+                      {lang === "SOM"
+                        ? "Hoteelka / meesha loo socdo"
+                        : "Hotel / destination address"}
                     </label>
                     <div className="x-field">
                       <MapPin className="w-4 h-4" aria-hidden="true" />
@@ -1984,13 +1883,9 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
                         value={transferForm.location}
                         onChange={(e) => updateTransferField("location", e.target.value)}
                         placeholder={
-                          transferForm.type === "pickup"
-                            ? lang === "SOM"
-                              ? "Geli hoteelka ama cinwaanka"
-                              : "Enter a hotel or destination"
-                            : lang === "SOM"
-                              ? "Geli meesha lagaa qaadayo"
-                              : "Enter pickup address"
+                          lang === "SOM"
+                            ? "Geli hoteelka ama cinwaanka"
+                            : "Enter a hotel or destination address"
                         }
                       />
                     </div>
@@ -2015,13 +1910,9 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
 
                   <div className="x-transfer-field">
                     <label className="x-field-label" htmlFor="transfer-time">
-                      {transferForm.type === "pickup"
-                        ? lang === "SOM"
-                          ? "Waqtiga duulimaadka"
-                          : "Flight arrival time"
-                        : lang === "SOM"
-                          ? "Waqtiga lagaa qaadayo"
-                          : "Pickup time"}
+                      {lang === "SOM"
+                        ? "Waqtiga imaatinka duulimaadka"
+                        : "Flight arrival time"}
                     </label>
                     <div className="x-field">
                       <Clock3 className="w-4 h-4" aria-hidden="true" />
@@ -2037,7 +1928,7 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
 
                   <div className="x-transfer-field">
                     <label className="x-field-label" htmlFor="transfer-passengers">
-                      {lang === "SOM" ? "Tirada dadka" : "Passengers"}
+                      {lang === "SOM" ? "Martida / tirada dadka" : "Passengers"}
                     </label>
                     <div className="x-field">
                       <Users className="w-4 h-4" aria-hidden="true" />
@@ -2053,75 +1944,6 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
                     </div>
                   </div>
 
-                  <div className="x-transfer-field">
-                    <label className="x-field-label" htmlFor="transfer-bags">
-                      {lang === "SOM" ? "Boorsooyinka (ikhtiyaari)" : "Bags / luggage (optional)"}
-                    </label>
-                    <div className="x-field">
-                      <ShoppingBag className="w-4 h-4" aria-hidden="true" />
-                      <input
-                        id="transfer-bags"
-                        type="number"
-                        min="0"
-                        step="1"
-                        value={transferForm.bags}
-                        onChange={(e) => updateTransferField("bags", e.target.value)}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="x-transfer-field">
-                    <label className="x-field-label" htmlFor="transfer-name">
-                      {lang === "SOM" ? "Magaca macmiilka" : "Customer name"}
-                    </label>
-                    <div className="x-field">
-                      <UserRound className="w-4 h-4" aria-hidden="true" />
-                      <input
-                        id="transfer-name"
-                        autoComplete="name"
-                        required
-                        value={transferForm.customerName}
-                        onChange={(e) => updateTransferField("customerName", e.target.value)}
-                        placeholder={lang === "SOM" ? "Magacaaga" : "Your name"}
-                      />
-                    </div>
-                  </div>
-
-                  <div className="x-transfer-field">
-                    <label className="x-field-label" htmlFor="transfer-phone">
-                      {lang === "SOM" ? "Nambarka taleefanka" : "Phone number"}
-                    </label>
-                    <div className="x-field">
-                      <MessageCircle className="w-4 h-4" aria-hidden="true" />
-                      <input
-                        id="transfer-phone"
-                        type="tel"
-                        autoComplete="tel"
-                        required
-                        value={transferForm.phone}
-                        onChange={(e) => updateTransferField("phone", e.target.value)}
-                        placeholder="+252 ..."
-                      />
-                    </div>
-                  </div>
-
-                  <div className="x-transfer-field x-transfer-field-full">
-                    <label className="x-field-label" htmlFor="transfer-notes">
-                      {lang === "SOM" ? "Faahfaahin dheeraad ah (ikhtiyaari)" : "Additional notes (optional)"}
-                    </label>
-                    <textarea
-                      id="transfer-notes"
-                      className="x-transfer-notes"
-                      rows="3"
-                      value={transferForm.notes}
-                      onChange={(e) => updateTransferField("notes", e.target.value)}
-                      placeholder={
-                        lang === "SOM"
-                          ? "Faahfaahin ku saabsan duulimaadka ama safarka"
-                          : "Flight or transfer details"
-                      }
-                    />
-                  </div>
                 </div>
 
                 {transferFormError && (
@@ -2164,30 +1986,11 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
                         </dd>
                       </div>
                       <div>
-                        <dt>{lang === "SOM" ? "Magaalada / degmada" : "City / district"}</dt>
-                        <dd>{transferRequestPreview.city}, {transferRequestPreview.district}</dd>
+                        <dt>{lang === "SOM" ? "Magaalada" : "City"}</dt>
+                        <dd>{transferRequestPreview.city}</dd>
                       </div>
                       <div>
-                        <dt>{lang === "SOM" ? "Garoonka" : "Airport"}</dt>
-                        <dd>
-                          {transferRequestPreview.airport === "Other"
-                            ? transferRequestPreview.customAirport
-                            : transferRequestPreview.airport}
-                          {transferRequestPreview.terminal
-                            ? ` · ${transferRequestPreview.terminal}`
-                            : ""}
-                        </dd>
-                      </div>
-                      <div>
-                        <dt>
-                          {transferRequestPreview.type === "pickup"
-                            ? lang === "SOM"
-                              ? "Meesha loo socdo"
-                              : "Destination"
-                            : lang === "SOM"
-                              ? "Meesha lagaa qaadayo"
-                              : "Pickup location"}
-                        </dt>
+                        <dt>{lang === "SOM" ? "Hoteelka / meesha loo socdo" : "Hotel / destination"}</dt>
                         <dd>{transferRequestPreview.location}</dd>
                       </div>
                       <div>
@@ -2195,23 +1998,14 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
                         <dd>{transferRequestPreview.date} · {transferRequestPreview.time}</dd>
                       </div>
                       <div>
-                        <dt>{lang === "SOM" ? "Dadka / boorsooyinka" : "Passengers / bags"}</dt>
-                        <dd>{transferRequestPreview.passengers} / {transferRequestPreview.bags || "0"}</dd>
+                        <dt>{lang === "SOM" ? "Tirada dadka" : "Passengers"}</dt>
+                        <dd>{transferRequestPreview.passengers}</dd>
                       </div>
-                      <div>
-                        <dt>{lang === "SOM" ? "Xiriirka" : "Contact"}</dt>
-                        <dd>{transferRequestPreview.customerName} · {transferRequestPreview.phone}</dd>
-                      </div>
-                      {transferRequestPreview.notes && (
-                        <div className="x-transfer-preview-notes">
-                          <dt>{lang === "SOM" ? "Faahfaahin" : "Notes"}</dt>
-                          <dd>{transferRequestPreview.notes}</dd>
-                        </div>
-                      )}
                     </dl>
                   </section>
                 )}
               </form>
+              </div>
             ) : (
               <form
                 id="service-search-panel"

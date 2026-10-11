@@ -1,0 +1,1 @@
+- [XASIL preview listings](xasil-preview-listings.md) — retain local demo inventory; do not switch to live properties without the user's direction.
