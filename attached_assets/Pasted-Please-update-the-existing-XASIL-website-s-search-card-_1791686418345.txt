@@ -1,0 +1,94 @@
+Please update the existing XASIL website’s search card UI and layout according to the requirements below.
+
+Important: Work on the current source code. Preserve the existing XASIL branding, logo, Deep Green + Gold color palette, typography, and overall design language. Do not redesign the entire website or add unrelated features. The goal is to make the current interface cleaner, more professional, and easier for Somali users to understand.
+
+1. Simplify the Main Service Tabs
+
+Display exactly these three tabs:
+
+1. Hoteello
+    * Remove “& Apartments”.
+    * Remove the subtitle “Hoygaaga xiga”.
+2. Hoolal
+    * Remove “& Xaflado”.
+    * Remove the subtitle “Maalmaha muhiimka ah”.
+3. Airport Transfer
+    * Add this as the third tab.
+    * Use a suitable airport/transport icon consistent with the existing icon style.
+
+Keep the tabs visually consistent, attractive, and easy to select. Clearly distinguish the active tab using the existing green-and-gold brand colors.
+
+2. Update the Hero Description
+
+Update the homepage description so it clearly communicates that XASIL helps users find hotels, book halls, and arrange airport transfers.
+
+Remove references to apartments as a separate service category. Keep the text concise, natural, and professional in Somali.
+
+3. Improve the Search Card Layout
+
+For the Hoteello and Hoolal search forms:
+
+* Place the MAGAALADA (City) and DEGMADA (District) dropdowns side by side in a two-column layout on desktop.
+* On small mobile screens, stack the fields vertically when necessary to prevent cramped or overlapping controls.
+* Keep consistent field heights, spacing, labels, icons, and alignment.
+* Ensure the search button is clearly visible and easy to use.
+
+Do not change existing search behavior unless necessary to make it work correctly.
+
+4. Implement the Airport Transfer Tab
+
+When the user selects Airport Transfer, display a complete, functional transfer request form within the same search-card design.
+
+Include the following fields:
+
+A. Transfer Type
+
+* Airport Pickup — Ka soo qaadid garoonka
+* Airport Drop-off — geynta garoonka
+
+B. Locations
+
+* City
+* Airport
+* Pickup location
+* Destination district, where applicable
+
+Adapt the labels and relevant fields to the selected transfer type. For example, Airport Pickup should clearly identify the arrival airport and the destination, while Airport Drop-off should identify the pickup address and departure airport.
+
+C. Date and Time
+
+* Transfer date
+* Pickup time or flight arrival time, depending on the transfer type
+
+D. Passengers and Luggage
+
+* Number of passengers
+* Number of bags/luggage (optional)
+
+E. Contact and Submission
+
+* Customer name
+* Phone number
+* Optional additional notes
+* Main button: “Dir Dalabka”
+
+The form must validate required fields and show clear, user-friendly error messages. Submitting it should use the website’s existing contact/WhatsApp request workflow if that is the current supported process. Do not display a success message unless the request has actually been prepared or submitted successfully.
+
+5. Responsive and Visual Quality
+
+* Maintain the existing XASIL design language.
+* Use the existing Deep Green as the primary color and Gold as a controlled accent.
+* Keep the search card clean, premium, and visually balanced.
+* Prevent text truncation, overlapping fields, and horizontal scrolling.
+* Test the interface on mobile and desktop.
+* Ensure all three tabs switch correctly and their forms display the appropriate fields.
+
+6. Scope Restrictions
+
+Do not add additional service categories, cities, customer-account features, payment integrations, or unrelated functionality.
+
+Do not replace the existing logo or redesign the homepage.
+
+Before editing, inspect the current code and reuse existing components wherever possible. After implementing the changes, run the production build and fix any errors caused by your changes.
+
+At the end, briefly list what you changed and any remaining limitations. Prioritize a working, polished interface over unnecessary new features.

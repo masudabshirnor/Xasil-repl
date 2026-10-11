@@ -46,6 +46,7 @@ import {
   Users,
   ChevronDown,
   BedDouble,
+  Plane,
   Heart,
   Clock3,
   CreditCard,
@@ -172,6 +173,12 @@ const CITIES = {
   Dhuusamareeb: ["Dayah", "Hodan", "Horseed", "Waberi", "Waharadde"],
 };
 const CITY_LIST = Object.keys(CITIES);
+const AIRPORT_OPTIONS = {
+  Muqdisho: ["Aden Adde International Airport"],
+  Hargeysa: ["Egal International Airport"],
+  Garoowe: ["Garowe International Airport"],
+  Dhuusamareeb: ["Dhuusamareeb Airport"],
+};
 
 // Representative local-only preview inventory. No request is made to a
 // production listings service; all images are shipped with this artifact.
@@ -354,6 +361,7 @@ export default function App() {
   const [selectedCity, setSelectedCity] = useState("All");
   const [selectedDistrict, setSelectedDistrict] = useState("All");
   const [selectedCategory, setSelectedCategory] = useState("Stay");
+  const [activeServiceTab, setActiveServiceTab] = useState("Stay");
   const [sortBy, setSortBy] = useState("recommended");
 
   const [searchDestination, setSearchDestination] = useState("All::All");
@@ -362,6 +370,24 @@ export default function App() {
   const [checkInDate, setCheckInDate] = useState("");
   const [checkOutDate, setCheckOutDate] = useState("");
   const [eventDate, setEventDate] = useState("");
+  const [transferForm, setTransferForm] = useState({
+    type: "pickup",
+    city: "",
+    district: "",
+    airport: "",
+    customAirport: "",
+    terminal: "",
+    location: "",
+    date: "",
+    time: "",
+    passengers: "1",
+    bags: "0",
+    customerName: "",
+    phone: "",
+    notes: "",
+  });
+  const [transferRequestPreview, setTransferRequestPreview] = useState(null);
+  const [transferFormError, setTransferFormError] = useState("");
 
   const [menuOpen, setMenuOpen] = useState(false);
   const [isAdminOpen, setIsAdminOpen] = useState(false);
@@ -612,6 +638,29 @@ const fetchProperties = async () => {
     document
       .getElementById("xasil-results")
       ?.scrollIntoView({ behavior: "smooth" });
+  };
+
+  const updateTransferField = (field, value) => {
+    setTransferForm((current) => ({ ...current, [field]: value }));
+    setTransferRequestPreview(null);
+    setTransferFormError("");
+  };
+
+  const handleTransferSubmit = (e) => {
+    e.preventDefault();
+    setTransferFormError("");
+
+    if (!e.currentTarget.checkValidity()) {
+      setTransferFormError(
+        lang === "SOM"
+          ? "Fadlan buuxi meelaha khasabka ah oo hubi in taariikhdu sax tahay."
+          : "Please complete the required fields and check the transfer date.",
+      );
+      e.currentTarget.querySelector(":invalid")?.focus();
+      return;
+    }
+
+    setTransferRequestPreview({ ...transferForm });
   };
 
   const handleAdminLogin = async (e) => {
@@ -1387,6 +1436,7 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
                 setSelectedCity("All");
                 setSelectedDistrict("All");
                 setSelectedCategory("Stay");
+                setActiveServiceTab("Stay");
                 setSearchDestination("All::All");
                 window.scrollTo({ top: 0, behavior: "smooth" });
               }}
@@ -1398,6 +1448,7 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
               <button
                 onClick={() => {
                   setSelectedCategory("Stay");
+                  setActiveServiceTab("Stay");
                   setSelectedCity("All");
                   setSelectedDistrict("All");
                 }}
@@ -1412,6 +1463,7 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
               <button
                 onClick={() => {
                   setSelectedCategory("Hall");
+                  setActiveServiceTab("Hall");
                   setSelectedCity("All");
                   setSelectedDistrict("All");
                   setSearchGuests(25);
@@ -1539,6 +1591,7 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
                 <button
                   onClick={() => {
                     setSelectedCategory("Stay");
+                    setActiveServiceTab("Stay");
                     setMenuOpen(false);
                   }}
                   className={
@@ -1553,6 +1606,7 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
                 <button
                   onClick={() => {
                     setSelectedCategory("Hall");
+                    setActiveServiceTab("Hall");
                     setSearchGuests(25);
                     setMenuOpen(false);
                   }}
@@ -1644,8 +1698,8 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
               </h1>
               <p>
                 {lang === "SOM"
-                  ? "Soo hel hoteello, apartments iyo hoolal ku habboon qorshahaaga. Isbarbardhig qiimaha, dooro taariikhaha, kuna bixi goobta."
-                  : "Find a hotel, apartment or event space that fits your plans. Compare options, choose your dates and pay at the property."}
+                  ? "Soo hel hoteello, qabo hoolal, kuna dalbo gaadiid garoonka ah si safarkaagu u fududaado."
+                  : "Find hotels, book halls and arrange airport transfers, all in one place."}
               </p>
               <div className="hero-promise">
                 <CheckCircle2 size={18} />
@@ -1676,232 +1730,689 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
             </div>
           </div>
           <div className="pro-search-shell">
-            <div className="pro-search-tabs">
+            <div
+              className="pro-search-tabs"
+              role="tablist"
+              aria-label={lang === "SOM" ? "Adeegyada XASIL" : "XASIL services"}
+            >
               <button
+                id="service-tab-stays"
                 type="button"
-                className={`x-tab ${selectedCategory === "Stay" ? "x-tab-active" : ""}`}
+                role="tab"
+                aria-selected={activeServiceTab === "Stay"}
+                aria-controls="service-search-panel"
+                className={`x-tab ${activeServiceTab === "Stay" ? "x-tab-active" : ""}`}
                 onClick={() => {
+                  setActiveServiceTab("Stay");
                   setSelectedCategory("Stay");
                   setSearchGuests(1);
                   setCustomHallGuests("");
                 }}
               >
-                <BedDouble size={20} />
-                <span>
-                  {lang === "SOM"
-                    ? "Hoteello & Apartments"
-                    : "Hotels & Apartments"}
-                  <small>
-                    {lang === "SOM" ? "Hoygaaga xiga" : "Your next stay"}
-                  </small>
-                </span>
+                <BedDouble size={20} aria-hidden="true" />
+                <span>{lang === "SOM" ? "Hoteello" : "Hotels"}</span>
               </button>
               <button
+                id="service-tab-halls"
                 type="button"
-                className={`x-tab ${selectedCategory === "Hall" ? "x-tab-active" : ""}`}
+                role="tab"
+                aria-selected={activeServiceTab === "Hall"}
+                aria-controls="service-search-panel"
+                className={`x-tab ${activeServiceTab === "Hall" ? "x-tab-active" : ""}`}
                 onClick={() => {
+                  setActiveServiceTab("Hall");
                   setSelectedCategory("Hall");
                   setSearchGuests(25);
                   setCustomHallGuests("");
                 }}
               >
-                <Building2 size={20} />
-                <span>
-                  {lang === "SOM" ? "Hoolal & Xaflado" : "Halls & Events"}
-                  <small>
-                    {lang === "SOM"
-                      ? "Maalmaha muhiimka ah"
-                      : "For your special occasions"}
-                  </small>
-                </span>
+                <Building2 size={20} aria-hidden="true" />
+                <span>{lang === "SOM" ? "Hoolal" : "Halls"}</span>
+              </button>
+              <button
+                id="service-tab-airport"
+                type="button"
+                role="tab"
+                aria-selected={activeServiceTab === "Airport"}
+                aria-controls="service-search-panel"
+                className={`x-tab ${activeServiceTab === "Airport" ? "x-tab-active" : ""}`}
+                onClick={() => setActiveServiceTab("Airport")}
+              >
+                <Plane size={20} aria-hidden="true" />
+                <span>Airport Transfer</span>
               </button>
             </div>
-            <form
-              onSubmit={handleSearchSubmit}
-              className="bg-white/97 backdrop-blur-xl rounded-[1.6rem] shadow-[0_22px_60px_rgba(15,23,42,.18)] border border-white p-4 md:p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 items-end"
-            >
-              <div className="lg:col-span-3">
-                <label className="x-field-label">
-                  {lang === "SOM" ? "Magaalada" : "City"}
-                </label>
-                <div className="x-field">
-                  <MapPin className="w-4 h-4" />
-                  <select
-                    aria-label={lang === "SOM" ? "Magaalada" : "City"}
-                    value={searchDestination.split("::")[0]}
-                    onChange={(e) => {
-                      const city = e.target.value;
-                      setSearchDestination(`${city}::All`);
-                    }}
-                    className="x-select"
-                  >
-                    <option value="All">
-                      {lang === "SOM" ? "Magaalo kasta" : "All cities"}
-                    </option>
-                    {CITY_LIST.map((city) => (
-                      <option key={city} value={city}>
-                        {city}
-                      </option>
-                    ))}
-                  </select>
-                  <ChevronDown className="w-4 h-4 opacity-50" />
-                </div>
-              </div>
-              <div className="lg:col-span-2">
-                <label className="x-field-label">
-                  {lang === "SOM" ? "Degmada" : "District"}
-                </label>
-                <div className="x-field">
-                  <MapIcon className="w-4 h-4" />
-                  <select
-                    aria-label={lang === "SOM" ? "Degmada" : "District"}
-                    value={searchDestination.split("::")[1]}
-                    disabled={searchDestination.split("::")[0] === "All"}
-                    onChange={(e) =>
-                      setSearchDestination(
-                        `${searchDestination.split("::")[0]}::${e.target.value}`,
-                      )
-                    }
-                    className="x-select disabled:opacity-50"
-                  >
-                    <option value="All">
-                      {lang === "SOM" ? "Degmo kasta" : "All districts"}
-                    </option>
-                    {searchDestination.split("::")[0] !== "All" &&
-                      CITIES[searchDestination.split("::")[0]].map((d) => (
-                        <option key={d} value={d}>
-                          {d}
+
+            {activeServiceTab === "Airport" ? (
+              <form
+                id="service-search-panel"
+                role="tabpanel"
+                aria-labelledby="service-tab-airport"
+                noValidate
+                onSubmit={handleTransferSubmit}
+                className="x-transfer-form"
+              >
+                <div className="x-transfer-fields">
+                  <fieldset className="x-transfer-type-fieldset">
+                    <legend className="x-field-label">
+                      {lang === "SOM" ? "Nooca safarka" : "Transfer type"}
+                    </legend>
+                    <div className="x-transfer-type-options">
+                      <label
+                        className={`x-transfer-choice ${transferForm.type === "pickup" ? "is-selected" : ""}`}
+                      >
+                        <input
+                          type="radio"
+                          name="transferType"
+                          value="pickup"
+                          checked={transferForm.type === "pickup"}
+                          onChange={(e) => updateTransferField("type", e.target.value)}
+                        />
+                        <span>
+                          <strong>Airport Pickup</strong>
+                          <small>Ka soo qaadid garoonka</small>
+                        </span>
+                      </label>
+                      <label
+                        className={`x-transfer-choice ${transferForm.type === "dropoff" ? "is-selected" : ""}`}
+                      >
+                        <input
+                          type="radio"
+                          name="transferType"
+                          value="dropoff"
+                          checked={transferForm.type === "dropoff"}
+                          onChange={(e) => updateTransferField("type", e.target.value)}
+                        />
+                        <span>
+                          <strong>Airport Drop-off</strong>
+                          <small>U geynta garoonka</small>
+                        </span>
+                      </label>
+                    </div>
+                  </fieldset>
+
+                  <div className="x-transfer-field">
+                    <label className="x-field-label" htmlFor="transfer-city">
+                      {lang === "SOM" ? "Magaalada" : "City"}
+                    </label>
+                    <div className="x-field">
+                      <MapPin className="w-4 h-4" aria-hidden="true" />
+                      <select
+                        id="transfer-city"
+                        required
+                        value={transferForm.city}
+                        onChange={(e) => {
+                          setTransferForm((current) => ({
+                            ...current,
+                            city: e.target.value,
+                            district: "",
+                            airport: "",
+                            customAirport: "",
+                          }));
+                          setTransferRequestPreview(null);
+                          setTransferFormError("");
+                        }}
+                      >
+                        <option value="" disabled>
+                          {lang === "SOM" ? "Dooro magaalo" : "Select a city"}
                         </option>
-                      ))}
-                  </select>
-                  <ChevronDown className="w-4 h-4 opacity-50" />
-                </div>
-              </div>
-              <DateRangePicker
-                single={selectedCategory === "Hall"}
-                start={selectedCategory === "Hall" ? eventDate : checkInDate}
-                end={selectedCategory === "Hall" ? "" : checkOutDate}
-                onChange={(a, b) => {
-                  if (selectedCategory === "Hall") setEventDate(a);
-                  else {
-                    setCheckInDate(a);
-                    setCheckOutDate(b);
-                  }
-                }}
-                lang={lang}
-              />
-              <div className="lg:col-span-1">
-                <label className="x-field-label">
-                  {lang === "SOM" ? "Martida" : "Guests"}
-                </label>
-                <div className="x-field">
-                  <Users className="w-4 h-4" />
-                  <select
-                    aria-label={t.guests}
-                    value={searchGuests}
-                    onChange={(e) => {
-                      const v = Number(e.target.value);
-                      setSearchGuests(v);
-                      if (v !== 0) setCustomHallGuests("");
-                    }}
-                    className="x-select"
-                  >
-                    {selectedCategory === "Stay" ? (
-                      <>
-                        <option value={1}>1</option>
-                        <option value={2}>2</option>
-                        <option value={3}>3</option>
-                        <option value={4}>4</option>
-                        {[5, 6, 7, 8].map((n) => (
-                          <option key={n} value={n}>
-                            {n}
+                        {CITY_LIST.map((city) => (
+                          <option key={city} value={city}>
+                            {city}
                           </option>
                         ))}
-                      </>
-                    ) : (
-                      <>
-                        <option value={25}>25</option>
-                        <option value={50}>50</option>
-                        <option value={100}>100</option>
-                        <option value={0}>Custom</option>
-                      </>
-                    )}
-                  </select>
+                      </select>
+                      <ChevronDown className="w-4 h-4 opacity-70" aria-hidden="true" />
+                    </div>
+                  </div>
+
+                  <div className="x-transfer-field">
+                    <label className="x-field-label" htmlFor="transfer-district">
+                      {transferForm.type === "pickup"
+                        ? lang === "SOM"
+                          ? "Degmada loo socdo"
+                          : "Destination district"
+                        : lang === "SOM"
+                          ? "Degmada lagaa qaadayo"
+                          : "Pickup district"}
+                    </label>
+                    <div className="x-field">
+                      <MapIcon className="w-4 h-4" aria-hidden="true" />
+                      <select
+                        id="transfer-district"
+                        required
+                        disabled={!transferForm.city}
+                        value={transferForm.district}
+                        onChange={(e) => updateTransferField("district", e.target.value)}
+                      >
+                        <option value="" disabled>
+                          {lang === "SOM" ? "Dooro degmo" : "Select a district"}
+                        </option>
+                        {(CITIES[transferForm.city] || []).map((district) => (
+                          <option key={district} value={district}>
+                            {district}
+                          </option>
+                        ))}
+                      </select>
+                      <ChevronDown className="w-4 h-4 opacity-70" aria-hidden="true" />
+                    </div>
+                  </div>
+
+                  <div className="x-transfer-field">
+                    <label className="x-field-label" htmlFor="transfer-airport">
+                      {transferForm.type === "pickup"
+                        ? lang === "SOM"
+                          ? "Garoonka imaatinka"
+                          : "Arrival airport"
+                        : lang === "SOM"
+                          ? "Garoonka bixitaanka"
+                          : "Departure airport"}
+                    </label>
+                    <div className="x-field">
+                      <Plane className="w-4 h-4" aria-hidden="true" />
+                      <select
+                        id="transfer-airport"
+                        required
+                        disabled={!transferForm.city}
+                        value={transferForm.airport}
+                        onChange={(e) => updateTransferField("airport", e.target.value)}
+                      >
+                        <option value="" disabled>
+                          {lang === "SOM" ? "Dooro garoonka" : "Select an airport"}
+                        </option>
+                        {(AIRPORT_OPTIONS[transferForm.city] || []).map((airport) => (
+                          <option key={airport} value={airport}>
+                            {airport}
+                          </option>
+                        ))}
+                        <option value="Other">
+                          {lang === "SOM" ? "Garoon kale" : "Other airport"}
+                        </option>
+                      </select>
+                      <ChevronDown className="w-4 h-4 opacity-70" aria-hidden="true" />
+                    </div>
+                  </div>
+
+                  {transferForm.airport === "Other" && (
+                    <div className="x-transfer-field">
+                      <label className="x-field-label" htmlFor="transfer-custom-airport">
+                        {lang === "SOM" ? "Magaca garoonka" : "Airport name"}
+                      </label>
+                      <div className="x-field">
+                        <Plane className="w-4 h-4" aria-hidden="true" />
+                        <input
+                          id="transfer-custom-airport"
+                          required
+                          value={transferForm.customAirport}
+                          onChange={(e) => updateTransferField("customAirport", e.target.value)}
+                          placeholder={lang === "SOM" ? "Geli magaca garoonka" : "Enter airport name"}
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  <div className="x-transfer-field">
+                    <label className="x-field-label" htmlFor="transfer-terminal">
+                      {lang === "SOM" ? "Terminal / irid (ikhtiyaari)" : "Terminal / gate (optional)"}
+                    </label>
+                    <div className="x-field">
+                      <Plane className="w-4 h-4" aria-hidden="true" />
+                      <input
+                        id="transfer-terminal"
+                        value={transferForm.terminal}
+                        onChange={(e) => updateTransferField("terminal", e.target.value)}
+                        placeholder={lang === "SOM" ? "Terminal ama iridda" : "Terminal or gate"}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="x-transfer-field">
+                    <label className="x-field-label" htmlFor="transfer-location">
+                      {transferForm.type === "pickup"
+                        ? lang === "SOM"
+                          ? "Hoteelka / meesha loo socdo"
+                          : "Hotel / destination location"
+                        : lang === "SOM"
+                          ? "Cinwaanka lagaa qaadayo"
+                          : "Pickup address"}
+                    </label>
+                    <div className="x-field">
+                      <MapPin className="w-4 h-4" aria-hidden="true" />
+                      <input
+                        id="transfer-location"
+                        required
+                        value={transferForm.location}
+                        onChange={(e) => updateTransferField("location", e.target.value)}
+                        placeholder={
+                          transferForm.type === "pickup"
+                            ? lang === "SOM"
+                              ? "Geli hoteelka ama cinwaanka"
+                              : "Enter a hotel or destination"
+                            : lang === "SOM"
+                              ? "Geli meesha lagaa qaadayo"
+                              : "Enter pickup address"
+                        }
+                      />
+                    </div>
+                  </div>
+
+                  <div className="x-transfer-field">
+                    <label className="x-field-label" htmlFor="transfer-date">
+                      {lang === "SOM" ? "Taariikhda safarka" : "Transfer date"}
+                    </label>
+                    <div className="x-field">
+                      <Calendar className="w-4 h-4" aria-hidden="true" />
+                      <input
+                        id="transfer-date"
+                        type="date"
+                        required
+                        min={localDate()}
+                        value={transferForm.date}
+                        onChange={(e) => updateTransferField("date", e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="x-transfer-field">
+                    <label className="x-field-label" htmlFor="transfer-time">
+                      {transferForm.type === "pickup"
+                        ? lang === "SOM"
+                          ? "Waqtiga duulimaadka"
+                          : "Flight arrival time"
+                        : lang === "SOM"
+                          ? "Waqtiga lagaa qaadayo"
+                          : "Pickup time"}
+                    </label>
+                    <div className="x-field">
+                      <Clock3 className="w-4 h-4" aria-hidden="true" />
+                      <input
+                        id="transfer-time"
+                        type="time"
+                        required
+                        value={transferForm.time}
+                        onChange={(e) => updateTransferField("time", e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="x-transfer-field">
+                    <label className="x-field-label" htmlFor="transfer-passengers">
+                      {lang === "SOM" ? "Tirada dadka" : "Passengers"}
+                    </label>
+                    <div className="x-field">
+                      <Users className="w-4 h-4" aria-hidden="true" />
+                      <input
+                        id="transfer-passengers"
+                        type="number"
+                        min="1"
+                        step="1"
+                        required
+                        value={transferForm.passengers}
+                        onChange={(e) => updateTransferField("passengers", e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="x-transfer-field">
+                    <label className="x-field-label" htmlFor="transfer-bags">
+                      {lang === "SOM" ? "Boorsooyinka (ikhtiyaari)" : "Bags / luggage (optional)"}
+                    </label>
+                    <div className="x-field">
+                      <ShoppingBag className="w-4 h-4" aria-hidden="true" />
+                      <input
+                        id="transfer-bags"
+                        type="number"
+                        min="0"
+                        step="1"
+                        value={transferForm.bags}
+                        onChange={(e) => updateTransferField("bags", e.target.value)}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="x-transfer-field">
+                    <label className="x-field-label" htmlFor="transfer-name">
+                      {lang === "SOM" ? "Magaca macmiilka" : "Customer name"}
+                    </label>
+                    <div className="x-field">
+                      <UserRound className="w-4 h-4" aria-hidden="true" />
+                      <input
+                        id="transfer-name"
+                        autoComplete="name"
+                        required
+                        value={transferForm.customerName}
+                        onChange={(e) => updateTransferField("customerName", e.target.value)}
+                        placeholder={lang === "SOM" ? "Magacaaga" : "Your name"}
+                      />
+                    </div>
+                  </div>
+
+                  <div className="x-transfer-field">
+                    <label className="x-field-label" htmlFor="transfer-phone">
+                      {lang === "SOM" ? "Nambarka taleefanka" : "Phone number"}
+                    </label>
+                    <div className="x-field">
+                      <MessageCircle className="w-4 h-4" aria-hidden="true" />
+                      <input
+                        id="transfer-phone"
+                        type="tel"
+                        autoComplete="tel"
+                        required
+                        value={transferForm.phone}
+                        onChange={(e) => updateTransferField("phone", e.target.value)}
+                        placeholder="+252 ..."
+                      />
+                    </div>
+                  </div>
+
+                  <div className="x-transfer-field x-transfer-field-full">
+                    <label className="x-field-label" htmlFor="transfer-notes">
+                      {lang === "SOM" ? "Faahfaahin dheeraad ah (ikhtiyaari)" : "Additional notes (optional)"}
+                    </label>
+                    <textarea
+                      id="transfer-notes"
+                      className="x-transfer-notes"
+                      rows="3"
+                      value={transferForm.notes}
+                      onChange={(e) => updateTransferField("notes", e.target.value)}
+                      placeholder={
+                        lang === "SOM"
+                          ? "Faahfaahin ku saabsan duulimaadka ama safarka"
+                          : "Flight or transfer details"
+                      }
+                    />
+                  </div>
                 </div>
-              </div>
-              <button type="submit" className="x-search-btn lg:col-span-2">
-                <Search className="w-5 h-5" />
-                {t.search}
-              </button>
-              {selectedCategory === "Hall" && searchGuests === 0 && (
-                <div className="md:col-span-2 lg:col-span-12">
-                  <input
-                    type="number"
-                    min="1"
-                    placeholder={
-                      lang === "SOM"
-                        ? "Qor tirada martida"
-                        : "Enter guest capacity"
+
+                {transferFormError && (
+                  <p className="x-transfer-error" role="alert">
+                    {transferFormError}
+                  </p>
+                )}
+
+                <button type="submit" className="x-search-btn x-transfer-submit">
+                  <Send className="w-4 h-4" aria-hidden="true" />
+                  {lang === "SOM" ? "Dir Dalabka" : "Send request"}
+                </button>
+
+                {transferRequestPreview && (
+                  <section className="x-transfer-preview" role="status" aria-live="polite">
+                    <div className="x-transfer-preview-heading">
+                      <div>
+                        <h3>{lang === "SOM" ? "Hordhaca codsiga waa diyaar" : "Request draft prepared"}</h3>
+                        <p>
+                          {lang === "SOM"
+                            ? "Hordhac keliya — codsiga lama dirin."
+                            : "Preview only — this request has not been sent."}
+                        </p>
+                      </div>
+                      <button
+                        type="button"
+                        onClick={() => setTransferRequestPreview(null)}
+                        aria-label={lang === "SOM" ? "Qari hordhaca codsiga" : "Hide request preview"}
+                      >
+                        <X size={17} aria-hidden="true" />
+                      </button>
+                    </div>
+                    <dl>
+                      <div>
+                        <dt>{lang === "SOM" ? "Adeegga" : "Service"}</dt>
+                        <dd>
+                          {transferRequestPreview.type === "pickup"
+                            ? "Airport Pickup"
+                            : "Airport Drop-off"}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>{lang === "SOM" ? "Magaalada / degmada" : "City / district"}</dt>
+                        <dd>{transferRequestPreview.city}, {transferRequestPreview.district}</dd>
+                      </div>
+                      <div>
+                        <dt>{lang === "SOM" ? "Garoonka" : "Airport"}</dt>
+                        <dd>
+                          {transferRequestPreview.airport === "Other"
+                            ? transferRequestPreview.customAirport
+                            : transferRequestPreview.airport}
+                          {transferRequestPreview.terminal
+                            ? ` · ${transferRequestPreview.terminal}`
+                            : ""}
+                        </dd>
+                      </div>
+                      <div>
+                        <dt>
+                          {transferRequestPreview.type === "pickup"
+                            ? lang === "SOM"
+                              ? "Meesha loo socdo"
+                              : "Destination"
+                            : lang === "SOM"
+                              ? "Meesha lagaa qaadayo"
+                              : "Pickup location"}
+                        </dt>
+                        <dd>{transferRequestPreview.location}</dd>
+                      </div>
+                      <div>
+                        <dt>{lang === "SOM" ? "Taariikh / waqti" : "Date / time"}</dt>
+                        <dd>{transferRequestPreview.date} · {transferRequestPreview.time}</dd>
+                      </div>
+                      <div>
+                        <dt>{lang === "SOM" ? "Dadka / boorsooyinka" : "Passengers / bags"}</dt>
+                        <dd>{transferRequestPreview.passengers} / {transferRequestPreview.bags || "0"}</dd>
+                      </div>
+                      <div>
+                        <dt>{lang === "SOM" ? "Xiriirka" : "Contact"}</dt>
+                        <dd>{transferRequestPreview.customerName} · {transferRequestPreview.phone}</dd>
+                      </div>
+                      {transferRequestPreview.notes && (
+                        <div className="x-transfer-preview-notes">
+                          <dt>{lang === "SOM" ? "Faahfaahin" : "Notes"}</dt>
+                          <dd>{transferRequestPreview.notes}</dd>
+                        </div>
+                      )}
+                    </dl>
+                  </section>
+                )}
+              </form>
+            ) : (
+              <form
+                id="service-search-panel"
+                role="tabpanel"
+                aria-labelledby={activeServiceTab === "Hall" ? "service-tab-halls" : "service-tab-stays"}
+                onSubmit={handleSearchSubmit}
+                className="bg-white/97 backdrop-blur-xl rounded-[1.6rem] shadow-[0_22px_60px_rgba(15,23,42,.18)] border border-white p-4 md:p-5 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-3 items-end"
+              >
+                <div className="x-search-locations md:col-span-2 lg:col-span-5">
+                  <div>
+                    <label className="x-field-label">
+                      {lang === "SOM" ? "MAGAALADA" : "CITY"}
+                    </label>
+                    <div className="x-field">
+                      <MapPin className="w-4 h-4" aria-hidden="true" />
+                      <select
+                        aria-label={lang === "SOM" ? "Magaalada" : "City"}
+                        value={searchDestination.split("::")[0]}
+                        onChange={(e) => {
+                          const city = e.target.value;
+                          setSearchDestination(`${city}::All`);
+                        }}
+                        className="x-select"
+                      >
+                        <option value="All">
+                          {lang === "SOM" ? "Magaalo kasta" : "All cities"}
+                        </option>
+                        {CITY_LIST.map((city) => (
+                          <option key={city} value={city}>
+                            {city}
+                          </option>
+                        ))}
+                      </select>
+                      <ChevronDown className="w-4 h-4 opacity-50" aria-hidden="true" />
+                    </div>
+                  </div>
+                  <div>
+                    <label className="x-field-label">
+                      {lang === "SOM" ? "DEGMADA" : "DISTRICT"}
+                    </label>
+                    <div className="x-field">
+                      <MapIcon className="w-4 h-4" aria-hidden="true" />
+                      <select
+                        aria-label={lang === "SOM" ? "Degmada" : "District"}
+                        value={searchDestination.split("::")[1]}
+                        disabled={searchDestination.split("::")[0] === "All"}
+                        onChange={(e) =>
+                          setSearchDestination(
+                            `${searchDestination.split("::")[0]}::${e.target.value}`,
+                          )
+                        }
+                        className="x-select disabled:opacity-50"
+                      >
+                        <option value="All">
+                          {lang === "SOM" ? "Degmo kasta" : "All districts"}
+                        </option>
+                        {searchDestination.split("::")[0] !== "All" &&
+                          CITIES[searchDestination.split("::")[0]].map((d) => (
+                            <option key={d} value={d}>
+                              {d}
+                            </option>
+                          ))}
+                      </select>
+                      <ChevronDown className="w-4 h-4 opacity-50" aria-hidden="true" />
+                    </div>
+                  </div>
+                </div>
+                <DateRangePicker
+                  single={selectedCategory === "Hall"}
+                  start={selectedCategory === "Hall" ? eventDate : checkInDate}
+                  end={selectedCategory === "Hall" ? "" : checkOutDate}
+                  onChange={(a, b) => {
+                    if (selectedCategory === "Hall") setEventDate(a);
+                    else {
+                      setCheckInDate(a);
+                      setCheckOutDate(b);
                     }
-                    value={customHallGuests}
-                    onChange={(e) => setCustomHallGuests(e.target.value)}
-                    className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#0a5147]"
-                  />
+                  }}
+                  lang={lang}
+                />
+                <div className="lg:col-span-1">
+                  <label className="x-field-label">
+                    {lang === "SOM" ? "Martida" : "Guests"}
+                  </label>
+                  <div className="x-field">
+                    <Users className="w-4 h-4" />
+                    <select
+                      aria-label={t.guests}
+                      value={searchGuests}
+                      onChange={(e) => {
+                        const v = Number(e.target.value);
+                        setSearchGuests(v);
+                        if (v !== 0) setCustomHallGuests("");
+                      }}
+                      className="x-select"
+                    >
+                      {selectedCategory === "Stay" ? (
+                        <>
+                          <option value={1}>1</option>
+                          <option value={2}>2</option>
+                          <option value={3}>3</option>
+                          <option value={4}>4</option>
+                          {[5, 6, 7, 8].map((n) => (
+                            <option key={n} value={n}>
+                              {n}
+                            </option>
+                          ))}
+                        </>
+                      ) : (
+                        <>
+                          <option value={25}>25</option>
+                          <option value={50}>50</option>
+                          <option value={100}>100</option>
+                          <option value={0}>Custom</option>
+                        </>
+                      )}
+                    </select>
+                  </div>
                 </div>
-              )}
-            </form>
+                <button type="submit" className="x-search-btn lg:col-span-2">
+                  <Search className="w-5 h-5" />
+                  {t.search}
+                </button>
+                {selectedCategory === "Hall" && searchGuests === 0 && (
+                  <div className="md:col-span-2 lg:col-span-12">
+                    <input
+                      type="number"
+                      min="1"
+                      placeholder={
+                        lang === "SOM"
+                          ? "Qor tirada martida"
+                          : "Enter guest capacity"
+                      }
+                      value={customHallGuests}
+                      onChange={(e) => setCustomHallGuests(e.target.value)}
+                      className="w-full border border-slate-200 rounded-xl px-4 py-3 text-sm outline-none focus:border-[#0a5147]"
+                    />
+                  </div>
+                )}
+              </form>
+            )}
             <div className="search-footnote">
               <CreditCard size={16} />
-              {lang === "SOM"
+              {activeServiceTab === "Airport"
+                ? lang === "SOM"
+                  ? "Hordhac keliya — codsigaaga looma diri doono."
+                  : "Preview only — your transfer request will not be sent."
+                : lang === "SOM"
                 ? "Hadda lacag lagaa qaadi maayo. Xaqiijinta hantida ayaa xigta."
                 : "No payment now. Requests are subject to property confirmation."}
             </div>
           </div>
         </section>
-        <section
-          id="popular-destinations"
-          className="city-shortcuts"
-          aria-label={lang === "SOM" ? "Magaalooyinka" : "Explore cities"}
-        >
-          <span>{lang === "SOM" ? "Halkee u socotaa?" : "Where to?"}</span>
-          {CITY_LIST.map((city) => (
-            <button
-              key={city}
-              className={selectedCity === city ? "active" : ""}
-              onClick={() => {
-                setSearchDestination(city + "::All");
-                setSelectedCity(city);
-                setSelectedDistrict("All");
-                document
-                  .getElementById("xasil-results")
-                  ?.scrollIntoView({ behavior: "smooth" });
-              }}
+        {activeServiceTab !== "Airport" && (
+          <>
+            <section
+              id="popular-destinations"
+              className="city-shortcuts"
+              aria-label={lang === "SOM" ? "Magaalooyinka" : "Explore cities"}
             >
-              <MapPin size={15} />
-              {city}
-              <ArrowRight size={14} />
-            </button>
-          ))}
-        </section>
-        <Discovery
-          properties={filteredProperties}
-          loading={propertiesLoading}
-          error={propertiesError}
-          onRetry={fetchProperties}
-          onOpen={setDetailsProperty}
-          lang={lang}
-          category={selectedCategory}
-          city={selectedCity}
-          sortBy={sortBy}
-          setSortBy={setSortBy}
-          onReset={() => {
-            setSelectedCity("All");
-            setSelectedDistrict("All");
-            setSearchDestination("All::All");
-            setSearchGuests(1);
-            setCustomHallGuests("");
-          }}
-        />
+              <span>{lang === "SOM" ? "Halkee u socotaa?" : "Where to?"}</span>
+              {CITY_LIST.map((city) => (
+                <button
+                  key={city}
+                  className={selectedCity === city ? "active" : ""}
+                  onClick={() => {
+                    setSearchDestination(city + "::All");
+                    setSelectedCity(city);
+                    setSelectedDistrict("All");
+                    document
+                      .getElementById("xasil-results")
+                      ?.scrollIntoView({ behavior: "smooth" });
+                  }}
+                >
+                  <MapPin size={15} />
+                  {city}
+                  <ArrowRight size={14} />
+                </button>
+              ))}
+            </section>
+            <Discovery
+              properties={filteredProperties}
+              loading={propertiesLoading}
+              error={propertiesError}
+              onRetry={fetchProperties}
+              onOpen={setDetailsProperty}
+              lang={lang}
+              category={selectedCategory}
+              city={selectedCity}
+              sortBy={sortBy}
+              setSortBy={setSortBy}
+              onReset={() => {
+                setSelectedCity("All");
+                setSelectedDistrict("All");
+                setSearchDestination("All::All");
+                setSearchGuests(1);
+                setCustomHallGuests("");
+              }}
+            />
+          </>
+        )}
         <section className="max-w-7xl mx-auto px-4 lg:px-6 pt-5 pb-12">
           <div
             className="xasil-partner-banner relative overflow-hidden rounded-3xl min-h-[220px] shadow-xl border border-slate-200 flex items-center"
@@ -1964,6 +2475,7 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
                 <button
                   onClick={() => {
                     setSelectedCategory("Stay");
+                  setActiveServiceTab("Stay");
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
                   className="block hover:text-white transition"
@@ -1975,6 +2487,7 @@ const normalizedCustomerPhone = `+252${cleanSomaliPhone}`;
                 <button
                   onClick={() => {
                     setSelectedCategory("Hall");
+                  setActiveServiceTab("Hall");
                     window.scrollTo({ top: 0, behavior: "smooth" });
                   }}
                   className="block hover:text-white transition"

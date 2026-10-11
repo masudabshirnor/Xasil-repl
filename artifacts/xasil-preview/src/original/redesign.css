@@ -1050,3 +1050,295 @@ body,
     scroll-behavior: auto !important;
   }
 }
+
+/* Shared service search: three clear tabs and a compact paired location row. */
+.xasil-page .pro-search-tabs {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 8px;
+}
+
+.xasil-page .pro-search-tabs .x-tab {
+  justify-content: center;
+  min-width: 0;
+  text-align: center;
+}
+
+.xasil-page .pro-search-tabs .x-tab > span {
+  min-width: 0;
+  overflow-wrap: anywhere;
+}
+
+.xasil-page .x-search-locations {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  min-width: 0;
+}
+
+.xasil-page .x-search-locations > div {
+  min-width: 0;
+}
+
+/* Airport request fields reuse the existing dark-green search controls. */
+.xasil-page .x-transfer-form {
+  display: grid;
+  gap: 16px;
+  padding: 20px 24px 16px;
+  border: 0;
+  border-radius: 0 0 20px 20px;
+  background: var(--brand-soft);
+  box-shadow: none;
+  backdrop-filter: none;
+}
+
+.xasil-page .x-transfer-fields {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 14px 12px;
+}
+
+.xasil-page .x-transfer-type-fieldset,
+.xasil-page .x-transfer-field {
+  min-width: 0;
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.xasil-page .x-transfer-type-fieldset,
+.xasil-page .x-transfer-field-full {
+  grid-column: 1 / -1;
+}
+
+.xasil-page .x-transfer-type-fieldset legend {
+  margin-bottom: 8px;
+}
+
+.xasil-page .x-transfer-type-options {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px;
+}
+
+.xasil-page .x-transfer-choice {
+  display: flex;
+  min-height: 62px;
+  align-items: center;
+  gap: 10px;
+  padding: 12px 14px;
+  border: 1px solid var(--brand-line);
+  border-radius: 12px;
+  color: var(--brand-dark);
+  background: var(--brand-white);
+  cursor: pointer;
+  transition: border-color 160ms ease, background-color 160ms ease, color 160ms ease;
+}
+
+.xasil-page .x-transfer-choice.is-selected {
+  border-color: var(--brand-deep);
+  color: var(--brand-gold);
+  background: var(--brand-deep);
+}
+
+.xasil-page .x-transfer-choice input {
+  width: 17px;
+  height: 17px;
+  flex: 0 0 auto;
+  accent-color: var(--brand-gold);
+}
+
+.xasil-page .x-transfer-choice span {
+  display: grid;
+  gap: 3px;
+  min-width: 0;
+}
+
+.xasil-page .x-transfer-choice strong {
+  font-size: 13px;
+  line-height: 1.25;
+}
+
+.xasil-page .x-transfer-choice small {
+  color: var(--brand-muted);
+  font-size: 11px;
+  line-height: 1.35;
+}
+
+.xasil-page .x-transfer-choice.is-selected small {
+  color: rgb(246 244 238 / 82%);
+}
+
+.xasil-page .x-transfer-field .x-field {
+  min-width: 0;
+}
+
+.xasil-page .x-transfer-form .x-field input,
+.xasil-page .x-transfer-form .x-field select {
+  width: 100%;
+  min-width: 0;
+  border: 0;
+  outline: 0;
+  color: var(--brand-white);
+  background: transparent;
+  font: inherit;
+}
+
+.xasil-page .x-transfer-form .x-field input::placeholder {
+  color: rgb(255 255 255 / 68%);
+  opacity: 1;
+}
+
+.xasil-page .x-transfer-form .x-field select option {
+  color: var(--brand-dark);
+  background: var(--brand-white);
+}
+
+.xasil-page .x-transfer-form .x-field:has(select:disabled) {
+  opacity: 0.6;
+}
+
+.xasil-page .x-transfer-notes {
+  width: 100%;
+  min-height: 86px;
+  resize: vertical;
+  border: 1px solid var(--brand-deep);
+  border-radius: 10px;
+  padding: 12px 14px;
+  color: var(--brand-white);
+  background: var(--brand-deep);
+  font: inherit;
+}
+
+.xasil-page .x-transfer-notes::placeholder {
+  color: rgb(255 255 255 / 68%);
+}
+
+.xasil-page .x-transfer-error {
+  margin: 0;
+  border: 1px solid #e8b7ae;
+  border-radius: 10px;
+  padding: 10px 12px;
+  color: #7d2d2d;
+  background: #fff2ef;
+  font-size: 13px;
+}
+
+.xasil-page .x-transfer-submit {
+  width: 100%;
+  min-height: 52px;
+  justify-content: center;
+}
+
+.xasil-page .x-transfer-preview {
+  border: 1px solid var(--brand-line);
+  border-left: 4px solid var(--brand-gold);
+  border-radius: 14px;
+  padding: 16px;
+  color: var(--brand-dark);
+  background: var(--brand-white);
+}
+
+.xasil-page .x-transfer-preview-heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+  margin-bottom: 12px;
+}
+
+.xasil-page .x-transfer-preview-heading h3 {
+  margin: 0;
+  color: var(--brand-deep);
+  font-size: 15px;
+  font-weight: 800;
+}
+
+.xasil-page .x-transfer-preview-heading p {
+  margin: 4px 0 0;
+  color: var(--brand-muted);
+  font-size: 12px;
+}
+
+.xasil-page .x-transfer-preview-heading button {
+  display: grid;
+  width: 32px;
+  height: 32px;
+  flex: 0 0 auto;
+  place-items: center;
+  border: 1px solid var(--brand-line);
+  border-radius: 9px;
+  color: var(--brand-deep);
+  background: var(--brand-soft);
+}
+
+.xasil-page .x-transfer-preview dl {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 10px 16px;
+  margin: 0;
+}
+
+.xasil-page .x-transfer-preview dl > div {
+  min-width: 0;
+}
+
+.xasil-page .x-transfer-preview dt {
+  margin-bottom: 3px;
+  color: var(--brand-muted);
+  font-size: 10px;
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+
+.xasil-page .x-transfer-preview dd {
+  margin: 0;
+  overflow-wrap: anywhere;
+  color: var(--brand-dark);
+  font-size: 13px;
+  font-weight: 650;
+}
+
+.xasil-page .x-transfer-preview-notes {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 560px) {
+  .xasil-page .pro-search-tabs {
+    gap: 4px;
+    padding-inline: 8px;
+  }
+
+  .xasil-page .pro-search-tabs .x-tab {
+    gap: 5px;
+    padding: 12px 5px 13px;
+    font-size: 12px;
+  }
+
+  .xasil-page .pro-search-tabs .x-tab > svg {
+    width: 17px;
+    height: 17px;
+    flex: 0 0 auto;
+  }
+
+  .xasil-page .x-search-locations {
+    grid-template-columns: 1fr;
+  }
+
+  .xasil-page .x-transfer-form {
+    padding: 16px;
+  }
+
+  .xasil-page .x-transfer-fields,
+  .xasil-page .x-transfer-type-options,
+  .xasil-page .x-transfer-preview dl {
+    grid-template-columns: 1fr;
+  }
+
+  .xasil-page .x-transfer-type-fieldset,
+  .xasil-page .x-transfer-field-full,
+  .xasil-page .x-transfer-preview-notes {
+    grid-column: 1;
+  }
+}
